@@ -22,6 +22,11 @@ const displayFont = Noto_Serif_SC({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+  icons: {
+    icon: '/logo.ico',
+    shortcut: '/logo.ico',
+    apple: '/logo.png',
+  },
   title:
     'SBTI人格测试在线平台完整说明：首页即测、类型浏览、结果解读、社交分享、FAQ与类型索引导航系统总入口中心页',
   description:
