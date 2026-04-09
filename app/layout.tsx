@@ -3,6 +3,7 @@ import Script from 'next/script';
 import { Noto_Sans_SC, Noto_Serif_SC } from 'next/font/google';
 import GlobalFooter from '@/components/global-footer';
 import GlobalTopNav from '@/components/global-top-nav';
+import { SITE_URL } from '@/lib/site';
 import './globals.css';
 
 const bodyFont = Noto_Sans_SC({
@@ -20,23 +21,25 @@ const displayFont = Noto_Serif_SC({
 });
 
 export const metadata: Metadata = {
-  title: 'SBTI 人格测试 | SBTI 测试在线 · SBTI 是什么',
+  metadataBase: new URL(SITE_URL),
+  title:
+    'SBTI人格测试在线平台完整说明：首页即测、类型浏览、结果解读、社交分享、FAQ与类型索引导航系统总入口中心页',
   description:
-    'SBTI 人格测试在线版：首页即时开测，了解 SBTI 是什么、SBTI 与 MBTI 的区别，并查看完整人格类型与结果解读。',
-  keywords: ['SBTI 人格测试', 'SBTI 测试在线', 'SBTI 是什么', 'SBTI MBTI', 'SBTI 人格类型'],
-  alternates: {
-    canonical: '/',
-  },
+    '这是一个面向中文互联网用户的SBTI人格测试站点，支持首页即时开测、弹窗逐题作答与结果页内展示，完成后可查看人格名称、维度评分和可分享内容。站点同时提供类型索引、人格详情、FAQ与合规页面，方便你理解SBTI是什么、它与MBTI的区别，以及在娱乐和社交场景中的使用边界。内容强调轻松表达而非心理诊断，适合自测与朋友讨论。',
   openGraph: {
-    title: 'SBTI 人格测试 | SBTI 测试在线',
-    description: 'SBTI 是什么？在首页弹窗完成测试，查看人格结果与类型解读。',
+    title:
+      'SBTI人格测试在线平台完整说明：首页即测、类型浏览、结果解读、社交分享、FAQ与类型索引导航系统总入口中心页',
+    description:
+      '这是一个面向中文互联网用户的SBTI人格测试站点，支持首页即时开测、弹窗逐题作答与结果页内展示，完成后可查看人格名称、维度评分和可分享内容。站点同时提供类型索引、人格详情、FAQ与合规页面，方便你理解SBTI是什么、它与MBTI的区别，以及在娱乐和社交场景中的使用边界。内容强调轻松表达而非心理诊断，适合自测与朋友讨论。',
     type: 'website',
     locale: 'zh_CN',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'SBTI 人格测试 | SBTI 测试在线',
-    description: 'SBTI 是什么？在线完成测试并查看人格类型。',
+    title:
+      'SBTI人格测试在线平台完整说明：首页即测、类型浏览、结果解读、社交分享、FAQ与类型索引导航系统总入口中心页',
+    description:
+      '这是一个面向中文互联网用户的SBTI人格测试站点，支持首页即时开测、弹窗逐题作答与结果页内展示，完成后可查看人格名称、维度评分和可分享内容。站点同时提供类型索引、人格详情、FAQ与合规页面，方便你理解SBTI是什么、它与MBTI的区别，以及在娱乐和社交场景中的使用边界。内容强调轻松表达而非心理诊断，适合自测与朋友讨论。',
   },
 };
 

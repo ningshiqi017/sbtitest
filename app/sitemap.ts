@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next';
+import { toAbsoluteUrl } from '@/lib/site';
 import { allTypeSlugs } from '@/lib/type-slugs';
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -12,11 +13,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: '/types',
       changeFrequency: 'weekly',
       priority: 0.8,
-    },
-    {
-      url: '/blog',
-      changeFrequency: 'weekly',
-      priority: 0.7,
     },
     {
       url: '/about',
@@ -36,5 +32,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...basePages, ...typePages];
+  return [...basePages, ...typePages].map((item) => ({
+    ...item,
+    url: toAbsoluteUrl(item.url),
+  }));
 }
