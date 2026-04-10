@@ -7,6 +7,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const pairs = [
     { en: '/', zh: '/zh', changeFrequency: 'weekly', priority: 1 },
+    { en: '/what-is-sbti', zh: '/zh/what-is-sbti', changeFrequency: 'weekly', priority: 0.7 },
+    { en: '/sbti-vs-mbti', zh: '/zh/sbti-vs-mbti', changeFrequency: 'weekly', priority: 0.7 },
+    {
+      en: '/how-sbti-test-works',
+      zh: '/zh/how-sbti-test-works',
+      changeFrequency: 'weekly',
+      priority: 0.7,
+    },
     { en: '/types', zh: '/zh/types', changeFrequency: 'weekly', priority: 0.8 },
     { en: '/about', zh: '/zh/about', changeFrequency: 'monthly', priority: 0.4 },
     { en: '/terms', zh: '/zh/terms', changeFrequency: 'monthly', priority: 0.4 },

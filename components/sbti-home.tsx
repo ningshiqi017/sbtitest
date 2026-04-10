@@ -157,6 +157,11 @@ export default function SbtiHome() {
             的结构灵感，但结果并不是严肃心理学标签，而是更贴近中文互联网语境的“自嘲式人格”，比如“死者”“吗喽”“ATM-er”。
             你可以把它当成一面带幽默滤镜的镜子：快速测、快速懂、快速分享。它的核心价值是娱乐和社交传播，而不是学术诊断。
           </p>
+          <div className="type-more-wrap">
+            <Link href="/zh/what-is-sbti" className="type-more-link">
+              查看完整说明
+            </Link>
+          </div>
         </article>
 
         <article className="content-card" id="vs-mbti">
@@ -166,6 +171,11 @@ export default function SbtiHome() {
             它不追求科学严谨，更像一种当代青年语境里的表达游戏。SBTI 用荒诞和梗文化描述处境，把“解释自己”这件事变得更轻松。
             两者都能带来“被看见”的感觉，但 MBTI 偏分析框架，SBTI 偏幽默共鸣与社交话题。
           </p>
+          <div className="type-more-wrap">
+            <Link href="/zh/sbti-vs-mbti" className="type-more-link">
+              查看对比详情
+            </Link>
+          </div>
         </article>
 
         <article className="content-card" id="how-to-play">
@@ -175,6 +185,11 @@ export default function SbtiHome() {
             交互方式是单题逐条模式：点击选项后自动进入下一题，支持上一题返回调整。完成后会即时展示人格名称、匹配说明、十五维度解读，
             并提供可复制的分享文案，方便你一键发到社交平台。
           </p>
+          <div className="type-more-wrap">
+            <Link href="/zh/how-sbti-test-works" className="type-more-link">
+              查看测试流程
+            </Link>
+          </div>
         </article>
 
         <article className="content-card" id="types">

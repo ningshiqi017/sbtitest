@@ -160,6 +160,11 @@ export default function SbtiHomeEn() {
             self-expression, not clinical diagnosis. On SBTI online, you get internet-native type
             labels, quick interpretation, and shareable results you can post right away.
           </p>
+          <div className="type-more-wrap">
+            <Link href="/what-is-sbti" className="type-more-link">
+              Read full guide
+            </Link>
+          </div>
         </article>
 
         <article className="content-card" id="vs-mbti">
@@ -170,6 +175,11 @@ export default function SbtiHomeEn() {
             culture-first. Both are enjoyable, but users search SBTI test when they want a lighter,
             share-ready experience.
           </p>
+          <div className="type-more-wrap">
+            <Link href="/sbti-vs-mbti" className="type-more-link">
+              Open comparison
+            </Link>
+          </div>
         </article>
 
         <article className="content-card" id="how-to-play">
@@ -180,6 +190,11 @@ export default function SbtiHomeEn() {
             use previous when needed, then submit to get instant SBTI test results, dimension scores,
             and a summary made for sharing.
           </p>
+          <div className="type-more-wrap">
+            <Link href="/how-sbti-test-works" className="type-more-link">
+              View method details
+            </Link>
+          </div>
         </article>
 
         <article className="content-card" id="types">

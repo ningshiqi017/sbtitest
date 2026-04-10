@@ -1,0 +1,32 @@
+locale,keyword_cluster,keyword,intent,priority,evidence_level,notes
+en,core_brand,sbti test,navigational+transactional,P0,strong,Core entry query pattern across competitors and your existing EN pages
+en,core_brand,sbti online test,transactional,P0,medium,High conversion phrase for direct test-start intent
+en,core_brand,sbti online,transactional,P1,medium,Shorter variant of online-entry intent
+en,core_brand,free sbti test,transactional,P1,medium,Strong CTR modifier in competitor titles
+en,definition,what is sbti,informational,P0,strong,Frequent educational block across winning pages
+en,comparison,sbti vs mbti,informational,P0,strong,Common module in ranking pages and social sharing contexts
+en,comparison,sbti and mbti difference,informational,P1,medium,Long-tail variant for comparison intent
+en,quiz_flow,how to take sbti test,informational,P1,medium,Bridges bounce before starting test
+en,quiz_flow,sbti test questions,informational,P1,medium,Supports question-count curiosity and pre-click trust
+en,results,sbti types,informational,P0,strong,Direct path to type-index and type-detail discovery
+en,results,sbti type meanings,informational,P1,medium,Matches post-result interpretation intent
+en,results,sbti 27 types,informational,P1,strong,Competing pages repeatedly mention 27 types
+en,results,silly big personality test,informational,P1,medium,Alias query for users aware of full phrase
+en,results,sbti atm-er,informational,P1,medium,Long-tail type query candidate
+en,results,sbti dead type,informational,P1,medium,Long-tail type query candidate
+zh,core_brand,sbti测试,navigational+transactional,P0,strong,Most common Chinese short query form in competitor pages
+zh,core_brand,sbti人格测试,navigational+transactional,P0,strong,High match to Chinese intent and existing page semantics
+zh,core_brand,sbti测试在线,transactional,P1,medium,Online-entry variant with action intent
+zh,core_brand,sbti在线测试,transactional,P1,medium,Common Chinese phrasing for web test intent
+zh,core_brand,sbti测试免费,transactional,P1,medium,Price modifier frequently used by competitors
+zh,definition,sbti是什么,informational,P0,strong,Core explanatory query for top-funnel discovery
+zh,definition,什么是sbti,informational,P0,strong,Equivalent wording with same intent
+zh,comparison,sbti和mbti区别,informational,P0,strong,Core comparison query used in competing content blocks
+zh,comparison,sbti vs mbti,informational,P1,medium,English-form variant often appears in Chinese pages
+zh,quiz_flow,sbti题目,informational,P1,medium,Pre-test concern about format and difficulty
+zh,quiz_flow,sbti怎么测,informational,P1,medium,Flow-understanding query before click
+zh,results,sbti人格类型,informational,P0,strong,Direct traffic path to types hub and type details
+zh,results,sbti 27种人格,informational,P1,strong,Repeated in competitor hero/modules
+zh,results,sbti 30题,informational,P1,medium,Strong curiosity hook aligned with your actual question count
+zh,long_tail,sbti atm-er是什么意思,informational,P2,medium,Type-specific long-tail for detail pages
+zh,long_tail,sbti 死者是什么意思,informational,P2,medium,Type-specific long-tail for detail pages

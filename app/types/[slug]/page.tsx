@@ -85,10 +85,14 @@ export default async function TypeDetailPage({
         </div>
       </header>
 
-      <article className="type-detail-card">
-        <img src={imageSrc} alt={`${item.code} ${item.cn}`} />
-        <p className="type-intro">{item.intro}</p>
-        <p className="type-desc">{item.desc}</p>
+      <article className="type-detail-card type-detail-layout">
+        <div className="type-detail-image">
+          <img src={imageSrc} alt={`${item.code} ${item.cn}`} />
+        </div>
+        <div className="type-detail-content">
+          <p className="type-intro">{item.intro}</p>
+          <p className="type-desc">{item.desc}</p>
+        </div>
       </article>
     </main>
   );

@@ -1,0 +1,9 @@
+gap_id,topic_or_asset,current_state,market_signal,impact,effort,priority,recommendation
+G01,Query ambiguity handling (SBTI climate vs personality),Not explicitly disambiguated at EN top blocks,Search ecosystem has heavy SBTi climate ambiguity,high,low,P0,Add explicit one-line disambiguation block near hero and in FAQ
+G02,Definition intent page (What is SBTI),Covered in homepage modules but not a standalone canonical page,Competitors repeatedly rank with dedicated explainers,high,medium,P0,Create dedicated definition page and internally link from home/types
+G03,Comparison intent page (SBTI vs MBTI),Partial module coverage on homepage,Comparison appears in nearly all strong competitors,high,medium,P0,Create standalone comparison page with table + FAQ
+G04,Question-method transparency (30 questions / scoring dimensions),Mentioned but scattered and not strongly keyword-targeted,Competitors front-load question counts in titles,high,low,P1,Create concise method section/page with exact numbers and scoring logic summary
+G05,Type-long-tail landing depth,Type detail pages exist but long-tail intent mapping not explicit,Competitors use type-name queries for capture,high,medium,P1,Define type query map and align each type page intro to one primary query
+G06,Schema breadth beyond home,Home has FAQPage/WebApplication but no broader graph strategy,Competitors use FAQ/WebSite/Quiz patterns,medium,low,P1,Plan Organization/BreadcrumbList/ItemList per page type in Build phase
+G07,Evidence/freshness trust signals,Limited visible timestamps/source notes,Factual freshness helps GEO citation selection,medium,low,P1,Add updated date + editorial notes pattern to informational pages
+G08,Blog noindex transitional strategy,Blog currently noindex by design,No immediate traffic capture from editorial cluster,medium,low,P2,Keep noindex now; open only after initial pillar content quality passes
