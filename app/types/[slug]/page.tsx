@@ -28,8 +28,8 @@ export async function generateMetadata({
   }
 
   const item = typeLibrary[code as keyof typeof typeLibrary];
-  const title = `${item.code} (${item.cn}) SBTI profile: traits, relationship pattern, behavior style and social expression`;
-  const description = `Explore what ${item.code} (${item.cn}) means in SBTI. This page summarizes core traits, behavior tendencies, relationship style, and expression patterns so you can understand your result and share it with context.`;
+  const title = `${item.code} SBTI test result: traits, behavior, and social style`;
+  const description = `Explore ${item.code} SBTI test result with key traits, behavior patterns, relationship tendencies, and social style. Read it fast on SBTI online and share clearly.`;
   const url = toAbsoluteUrl(`/types/${slug}`);
 
   return {
@@ -76,6 +76,9 @@ export default async function TypeDetailPage({
         <h1>
           {item.code} ({item.cn})
         </h1>
+        <p className="type-desc">
+          This page explains your SBTI test result with fast reading support on SBTI online.
+        </p>
         <div className="type-detail-nav">
           <Link href="/">Back to homepage test</Link>
           <Link href="/types">Browse all types</Link>

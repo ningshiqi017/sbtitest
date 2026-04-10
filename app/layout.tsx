@@ -29,23 +29,23 @@ export const metadata: Metadata = {
     apple: '/logo.png',
   },
   title:
-    'SBTI Personality Test Online: instant quiz, type library, interpretation and shareable results',
+    'SBTI test online: instant quiz, fast results and sharing hub',
   description:
-    'SBTI is an entertainment-first personality test inspired by internet culture. Start from the homepage, answer in a modal flow, and get a shareable result with dimension scores and type interpretation.',
+    'SBTI test online is an entertainment-first quiz with a modal flow. Get instant type results, dimension scores, and summaries on SBTI online for easy sharing.',
   openGraph: {
     title:
-      'SBTI Personality Test Online: instant quiz, type library, interpretation and shareable results',
+      'SBTI test online: instant quiz, fast results and sharing hub',
     description:
-      'SBTI is an entertainment-first personality test inspired by internet culture. Start from the homepage, answer in a modal flow, and get a shareable result with dimension scores and type interpretation.',
+      'SBTI test online is an entertainment-first quiz with a modal flow. Get instant type results, dimension scores, and summaries on SBTI online for easy sharing.',
     type: 'website',
     locale: 'en_US',
   },
   twitter: {
     card: 'summary_large_image',
     title:
-      'SBTI Personality Test Online: instant quiz, type library, interpretation and shareable results',
+      'SBTI test online: instant quiz, fast results and sharing hub',
     description:
-      'SBTI is an entertainment-first personality test inspired by internet culture. Start from the homepage, answer in a modal flow, and get a shareable result with dimension scores and type interpretation.',
+      'SBTI test online is an entertainment-first quiz with a modal flow. Get instant type results, dimension scores, and summaries on SBTI online for easy sharing.',
   },
 };
 

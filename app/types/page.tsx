@@ -6,9 +6,9 @@ import { toTypeSlug } from '@/lib/type-slugs';
 
 export const metadata: Metadata = {
   title:
-    'SBTI personality type index: browse all 27 types, labels, meanings and detail pages in one place',
+    'SBTI test types online: browse all 27 type results fast',
   description:
-    'Browse the full SBTI personality library and quickly open each type detail page. This index helps you compare labels, understand each profile’s tone, and continue reading after finishing the test.',
+    'Browse SBTI test types in one index and open each profile in one click. Compare labels, read traits, and move to detail pages after your SBTI test result.',
   alternates: {
     canonical: toAbsoluteUrl('/types'),
     languages: {
@@ -19,9 +19,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title:
-      'SBTI personality type index: browse all 27 types, labels, meanings and detail pages in one place',
+      'SBTI test types online: browse all 27 type results fast',
     description:
-      'Browse the full SBTI personality library and quickly open each type detail page. This index helps you compare labels, understand each profile’s tone, and continue reading after finishing the test.',
+      'Browse SBTI test types in one index and open each profile in one click. Compare labels, read traits, and move to detail pages after your SBTI test result.',
     url: toAbsoluteUrl('/types'),
     locale: 'en_US',
   },
@@ -35,6 +35,7 @@ export default function TypeIndexPage() {
       <header className="type-page-header">
         <p>SBTI Type Index</p>
         <h1>All Personality Types</h1>
+        <p className="type-desc">Browse every SBTI test type result and open each SBTI online profile page.</p>
         <Link href="/">Back to homepage test</Link>
       </header>
 

@@ -4,9 +4,9 @@ import { toAbsoluteUrl } from '@/lib/site';
 
 export const metadata: Metadata = {
   title:
-    'About SBTI: project positioning, methodology, content boundary, roadmap and collaboration notes',
+    'About SBTI test online: positioning, scope, method, roadmap',
   description:
-    'Learn what SBTI is designed for, how we frame entertainment-first personality content, and where the boundary lies between playful expression and professional diagnosis. This page also covers roadmap and contact context.',
+    'Learn what SBTI test online is built for, how we design SBTI content, and where the boundary sits between playful expression and guidance on SBTI online.',
   alternates: {
     canonical: toAbsoluteUrl('/about'),
     languages: {
@@ -24,17 +24,16 @@ export default function AboutPage() {
         <p>About SBTI</p>
         <h1>About</h1>
         <p className="type-desc">
-          SBTI is an entertainment-first personality test project built for playful, shareable, and
-          internet-native self-expression.
+          SBTI test online is built for playful, shareable, and internet-native self-expression.
         </p>
         <Link href="/">Back to homepage test</Link>
       </header>
 
       <section className="type-detail-card">
         <p className="type-desc">
-          Our content is inspired by contemporary online culture and uses humorous labels to reflect
-          everyday emotional states. Test results are for entertainment only and should not be used
-          as medical, psychological, legal, or hiring evidence.
+          SBTI content is inspired by contemporary online culture and uses humorous labels to reflect
+          everyday emotional states. SBTI test results are for entertainment only and should not be
+          used as medical, psychological, legal, or hiring evidence.
         </p>
       </section>
     </main>

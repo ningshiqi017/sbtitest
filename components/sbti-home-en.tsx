@@ -143,7 +143,10 @@ export default function SbtiHomeEn() {
   return (
     <main className="landing-page">
       <section className="hero-screen">
-        <h1 className="hero-title">MBTI had its era. SBTI is now.</h1>
+        <h1 className="hero-title">
+          <span className="hero-line">MBTI had its era.</span>
+          <span className="hero-line">SBTI is now.</span>
+        </h1>
         <button className="primary-btn hero-start" onClick={openTest}>
           Start Test
         </button>
@@ -153,41 +156,38 @@ export default function SbtiHomeEn() {
         <article className="content-card" id="what-is-sbti">
           <h2>What is SBTI?</h2>
           <p>
-            SBTI stands for Silly Big Personality Test. It borrows the structural spirit of MBTI,
-            but the output is deliberately internet-native and humorous rather than clinical. You do
-            not get formal psychological labels; you get culturally legible, meme-friendly personas
-            you can read fast and share fast. The core value is entertainment and social resonance,
-            not diagnosis.
+            SBTI stands for Silly Big Personality Test. The SBTI test is built for fast, playful
+            self-expression, not clinical diagnosis. On SBTI online, you get internet-native type
+            labels, quick interpretation, and shareable results you can post right away.
           </p>
         </article>
 
         <article className="content-card" id="vs-mbti">
           <h2>SBTI vs MBTI: what is different?</h2>
           <p>
-            MBTI is a classic framework used for structured reflection and communication styles.
-            SBTI is a different product category: it does not claim scientific rigor. Instead, it
-            turns modern emotional states into playful labels and conversation starters. MBTI is
-            model-first; SBTI is culture-first. Both can be fun, but they serve different intents.
+            MBTI is a classic framework for structured reflection. The SBTI test has a different
+            goal: social resonance, humor, and speed. If MBTI is model-first, SBTI online is
+            culture-first. Both are enjoyable, but users search SBTI test when they want a lighter,
+            share-ready experience.
           </p>
         </article>
 
         <article className="content-card" id="how-to-play">
           <h2>How the test works</h2>
           <p>
-            This version contains 30 core questions across 15 dimensions, with conditional bonus
-            questions based on your choices. The flow is one question at a time inside a modal.
-            Once you choose an option, it advances automatically; you can still go back to the
-            previous question. After submission, you instantly get a type label, interpretation,
-            dimension breakdown, and a shareable summary.
+            The SBTI test online includes 30 core questions across 15 dimensions, plus conditional
+            bonus questions. The quiz runs one-by-one in a modal. Select an option to auto-advance,
+            use previous when needed, then submit to get instant SBTI test results, dimension scores,
+            and a summary made for sharing.
           </p>
         </article>
 
         <article className="content-card" id="types">
           <h2>What personality types are available?</h2>
           <p>
-            SBTI currently includes 27 personality types with distinct tones and narratives. Start
-            with the featured set below, then open the full index to browse every type and detail
-            page.
+            SBTI currently includes 27 type outcomes. You can preview featured profiles below, then
+            open the full SBTI test type index for all details. Each type page helps you understand
+            your SBTI test result and share it with clearer context.
           </p>
           <div className="type-link-grid" aria-label="Personality type list">
             {featuredTypeEntries.map((item) => (
@@ -210,10 +210,9 @@ export default function SbtiHomeEn() {
         <article className="content-card" id="why-hot">
           <h2>Why is SBTI popular?</h2>
           <p>
-            SBTI went viral because it compresses complex self-explanations into one vivid label.
-            For younger users, that is efficient social language: self-deprecating, funny, and easy
-            to circulate. When results become shareable content, personal mood turns into network
-            distribution. That social loop is a major growth engine.
+            SBTI went viral because the SBTI test compresses complex self-description into one vivid
+            label. For younger users, SBTI online works as social language: funny, quick, and easy
+            to repost. Once SBTI test results become shareable content, distribution happens naturally.
           </p>
         </article>
 
@@ -222,21 +221,21 @@ export default function SbtiHomeEn() {
           <details>
             <summary>How is SBTI different from MBTI?</summary>
             <p>
-              MBTI is a structured personality framework; SBTI is entertainment-focused and
+              MBTI is a structured framework, while the SBTI test is entertainment-focused and
               internet-native in tone.
             </p>
           </details>
           <details>
             <summary>How many SBTI types are there?</summary>
-            <p>There are 27 types in the current version.</p>
+            <p>There are 27 types in the current SBTI test version.</p>
           </details>
           <details>
-            <summary>Is the test free?</summary>
-            <p>Yes. You can start directly from the homepage without registration.</p>
+            <summary>Is SBTI test online free?</summary>
+            <p>Yes. SBTI online is free to start from the homepage without registration.</p>
           </details>
           <details>
-            <summary>Does the test open a new page?</summary>
-            <p>No. The full quiz and result stay in a top-level modal on the homepage.</p>
+            <summary>Does the SBTI test open a new page?</summary>
+            <p>No. The full SBTI test and result stay in a top-level modal on the homepage.</p>
           </details>
         </article>
       </section>

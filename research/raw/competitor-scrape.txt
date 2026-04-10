@@ -1,0 +1,41 @@
+=== https://sbtitest.co ===
+title: SBTI Test — Free Silly Big Personality Type Quiz
+description: Take the free SBTI personality test now. Answer 31 fun questions to discover which of 
+h1:  What I  Your SBTI Per onality Type? Take the Free SBTI Te t Now 
+faq_count: 12
+
+=== https://sbtitest.pro ===
+title: SBTI personality test online: instant quiz, type interpretation, result sharing and FAQ guide
+description: Take the SBTI personality test online for free. Complete one-by-one questions in a modal, get your type and dimension scores instantly, compare SBTI vs MBTI, and e
+h1: MBTI had it  era. SBTI i  now.
+faq_count: 11
+
+=== https://sbtitest.live ===
+title: SBTI 人格测试
+description: h1: 一场更有戏的，互联网人格测试。
+faq_count: 0
+
+=== https://sbtitestai.com ===
+title: SBTI 测试 — 比MBTI更懂你的人格测试，27种人格免费在线测
+description: SBTI测试是当下最火爆的人格测试，覆盖
+h1: MBTI已经过时， SBTI测试来了。
+faq_count: 14
+
+=== https://www.sbti-web.com ===
+title: SBTI测试 - 免费在线抽象人格测试 | 搞笑版MBTI
+description: SBTI抽象人格测试，15道趣味场景题测出
+h1: SBTI 抽象人格测试
+faq_count: 0
+
+=== https://sbittest.top ===
+title: SBTI测试 - 免费在线SBTI人格测试｜发现你的真实性格
+description: SBTI测试是全新一代免费在线人格测试，31道趣味题目揭示你的
+h1: SBTI测试 — 用31道题找到属于你的人格密码
+faq_count: 6
+
+=== https://sbti-test.net ===
+title: SBTI 人格测试 — 30道题测出你的28种抽象人格类型 | 免费在线趣味人格测试 | sbti-test.net
+description: SBTI 人格测试是 
+h1:  SBTI 人格测试  — 比 MBTI 更懂你的抽象灵魂
+faq_count: 28
+

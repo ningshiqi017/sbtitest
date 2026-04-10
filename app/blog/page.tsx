@@ -3,9 +3,9 @@ import Link from 'next/link';
 import { toAbsoluteUrl } from '@/lib/site';
 
 export const metadata: Metadata = {
-  title: 'SBTI Blog: product updates, type observations, growth notes and site announcements',
+  title: 'SBTI online blog: test updates, type stories, and news feed',
   description:
-    'The SBTI blog is where we publish product updates, quiz iteration notes, personality observations, and operational announcements. This section is under construction and will open after editorial QA is complete.',
+    'The SBTI blog publishes SBTI test updates, quiz notes, type stories, and announcements. This section is under construction and opens after editorial review.',
   alternates: {
     canonical: toAbsoluteUrl('/blog'),
     languages: {
@@ -26,7 +26,9 @@ export default function BlogPage() {
       <header className="type-page-header">
         <p>SBTI Blog</p>
         <h1>Blog</h1>
-        <p className="type-desc">This section will publish SBTI updates, persona essays, and project announcements.</p>
+        <p className="type-desc">
+          This SBTI online blog will publish SBTI test updates, persona essays, and project announcements.
+        </p>
         <Link href="/">Back to homepage test</Link>
       </header>
 

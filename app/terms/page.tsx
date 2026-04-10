@@ -4,9 +4,9 @@ import { toAbsoluteUrl } from '@/lib/site';
 
 export const metadata: Metadata = {
   title:
-    'SBTI Terms of Use: entertainment boundary, disclaimer, usage rules and user responsibility',
+    'SBTI test online terms: disclaimer, usage rules, legal scope',
   description:
-    'Read the SBTI terms of use, including entertainment-only scope, non-diagnostic disclaimer, content usage expectations, and policy update rights, so you clearly understand the legal and practical boundary before using the site.',
+    'Read SBTI test online terms to understand entertainment-only scope, boundaries, content usage rules, and update rights before using or sharing results.',
   alternates: {
     canonical: toAbsoluteUrl('/terms'),
     languages: {
@@ -28,8 +28,8 @@ export default function TermsPage() {
 
       <section className="type-detail-card">
         <p className="type-desc">
-          1. This test is provided for entertainment and social sharing only. It is not medical,
-          psychological, legal, or hiring evidence.
+          1. SBTI test online is provided for entertainment and social sharing only. It is not
+          medical, psychological, legal, or hiring evidence.
         </p>
         <p className="type-desc">
           2. Users must not use this website for illegal purposes, harassment, or malicious content

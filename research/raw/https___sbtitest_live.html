@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SBTI 人格测试</title>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GX4TZNP5KK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-GX4TZNP5KK');
+  </script>
+  <link rel="icon" href='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"%3E%3Crect width="64" height="64" rx="16" fill="%23774524"/%3E%3Ctext x="50%25" y="54%25" text-anchor="middle" font-size="28" font-family="Georgia, serif" font-weight="700" fill="%23fff7ee"%3ES%3C/text%3E%3C/svg%3E' />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="shell">
+    <section id="intro" class="screen active">
+      <div class="hero card hero-minimal">
+        <div class="hero-toolbar">
+          <div class="eyebrow" data-i18n="brand_tag">SBTI Personality Lab</div>
+          <div class="lang-switch" role="group" aria-label="Language toggle">
+            <button id="langZhBtn" class="lang-btn is-active" type="button">中文</button>
+            <button id="langEnBtn" class="lang-btn" type="button">EN</button>
+          </div>
+        </div>
+
+        <div class="hero-layout">
+          <div class="hero-copy">
+            <div class="hero-copy-top">
+              <h1 data-i18n="hero_title">一场更有戏的，互联网人格测试。</h1>
+              <p class="sub" data-i18n="hero_sub">SBTI 不试图像专业量表一样冷静，它更像一面带点锋利感的镜子。我们保留了这套测试的网感、黑色幽默与隐藏分支，同时把体验重新设计成一个更完整、更适合上线展示的前端作品。</p>
+              <div class="hero-actions">
+                <button id="startBtn" class="btn-primary" data-i18n="cta_start">开始测试</button>
+                <button id="previewBtn" class="btn-secondary" data-i18n="cta_preview">直接预览结果页</button>
+              </div>
+              <p class="hero-note" data-i18n="hero_note">共 15 个维度、31 道核心题，以及一个会突然接管你命运的隐藏人格入口。</p>
+              <p class="hero-domain"><span data-i18n="domain_label">正式域名</span> <a href="https://sbtitest.live" target="_blank" rel="noreferrer">sbtitest.live</a></p>
+            </div>
+
+            <div class="hero-stats">
+              <div class="stat">
+                <div class="stat-value">15</div>
+                <div class="stat-label" data-i18n="stat_1">人格维度拆解，结果不只给你标签，也会给出每一维的解释。</div>
+              </div>
+              <div class="stat">
+                <div class="stat-value">31+</div>
+                <div class="stat-label" data-i18n="stat_2">题目随机打散，辅以隐藏机制，测试流程更像一次带分支的互动叙事。</div>
+              </div>
+              <div class="stat">
+                <div class="stat-value">25</div>
+                <div class="stat-label" data-i18n="stat_3">基础人格模板参与匹配，并保留特殊人格兜底逻辑。</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-side">
+            <div class="hero-showcase">
+              <div class="hero-showcase-label" data-i18n="showcase_label">Featured Result</div>
+              <div class="hero-showcase-card">
+                <strong>CTRL</strong>
+                <span data-i18n="showcase_name">拿捏者</span>
+                <p data-i18n="showcase_desc">结果页不再只是给出名称，而是像一张有气氛、有收藏感的人格海报，适合继续延展成分享卡片或品牌内容。</p>
+              </div>
+            </div>
+
+            <div class="mini-panel">
+              <h3 data-i18n="panel_title">当前版本保留了什么</h3>
+              <ul id="panelList">
+                <li data-i18n="panel_item_1">原始题库、维度映射与人格匹配算法</li>
+                <li data-i18n="panel_item_2">隐藏饮酒人格与低匹配度兜底机制</li>
+                <li data-i18n="panel_item_3">纯静态单页结构，直接部署到 Pages 就能上线</li>
+              </ul>
+            </div>
+
+            <div class="hero-matrix">
+              <div>
+                <strong>Self</strong>
+                <span data-i18n="matrix_1">自我模型</span>
+              </div>
+              <div>
+                <strong>Emotion</strong>
+                <span data-i18n="matrix_2">情感模型</span>
+              </div>
+              <div>
+                <strong>Social</strong>
+                <span data-i18n="matrix_3">社交模型</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="intro-story">
+          <div class="intro-story-label" data-i18n="story_label">Before You Start</div>
+          <p class="intro-story-copy" id="introStory"></p>
+        </div>
+
+        <div class="compare-section">
+          <div class="compare-header">
+            <h2 data-i18n="compare_title">SBTI 和 MBTI 有什么不同？</h2>
+            <p data-i18n="compare_sub">先把边界讲清楚，再开始玩。</p>
+          </div>
+
+          <div class="compare-grid">
+            <article class="compare-card compare-card-accent">
+              <div class="compare-card-kicker">SBTI</div>
+              <h3 data-i18n="card_sbti_title">Silly Big Personality Test</h3>
+              <p data-i18n="card_sbti_desc">一种流行、荒诞、偏互联网语境的“人格测试”梗图文化产物，核心目标是自嘲式娱乐和压力宣泄。</p>
+              <ul class="compare-list">
+                <li data-i18n="card_sbti_item_1">目的：幽默、荒诞、自我解构、情绪出口。</li>
+                <li data-i18n="card_sbti_item_2">性质：非官方、社交媒体驱动、内容高度玩梗。</li>
+                <li data-i18n="card_sbti_item_3">结果：像 ATM-er、SOLO、JOKE-R、DEAD 这样的标签更接近“互联网角色名”。</li>
+              </ul>
+            </article>
+
+            <article class="compare-card">
+              <div class="compare-card-kicker">MBTI</div>
+              <h3 data-i18n="card_mbti_title">Myers-Briggs Type Indicator</h3>
+              <p data-i18n="card_mbti_desc">一个传统的人格分类框架，按照偏好将人归纳为 16 种类型，更常出现在职业咨询、个人发展与团队协作场景中。</p>
+              <ul class="compare-list">
+                <li data-i18n="card_mbti_item_1">目的：理解偏好、沟通方式、优势与盲区。</li>
+                <li data-i18n="card_mbti_item_2">性质：结构化、传统、严肃语境下更常见。</li>
+                <li data-i18n="card_mbti_item_3">结构：围绕四组维度展开，如 E/I、S/N、T/F、J/P。</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="compare-footnote" data-i18n="compare_note">这个项目更接近一个精致的互联网互动作品，而不是专业心理评估工具。</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="test" class="screen">
+      <div class="test-wrap card">
+        <div class="topbar">
+          <div class="progress"><span id="progressBar"></span></div>
+          <div class="progress-text" id="progressText">0 / 31</div>
+        </div>
+
+        <div id="questionList" class="question-list"></div>
+
+        <div class="actions-bottom">
+          <div class="hint" id="testHint">全选完才会放行。世界已经够乱了，起码把题做完整。</div>
+          <div class="hint subtle-hint" id="languageHint"></div>
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <button id="backIntroBtn" class="btn-secondary" data-i18n="back_home">返回首页</button>
+            <button id="submitBtn" class="btn-primary" disabled data-i18n="submit_result">提交并查看结果</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="result" class="screen">
+      <div class="result-wrap card">
+        <div class="result-layout">
+          <div class="result-top">
+            <div class="poster-box" id="posterBox">
+              <img id="posterImage" class="poster-image" alt="人格结果图" />
+              <div class="poster-frame">
+                <div class="poster-eyebrow" data-i18n="result_card">Result Card</div>
+                <div>
+                  <div id="posterCode" class="poster-code">CTRL</div>
+                  <div id="posterLabel" class="poster-label">拿捏者</div>
+                </div>
+                <div class="poster-motto">
+                  <strong data-i18n="system_note">System Note</strong>
+                  <p id="posterMotto">结果海报会根据人格代号自动生成主视觉和简短描述。</p>
+                </div>
+              </div>
+              <div id="posterCaption" class="poster-caption">怎么样，被我拿捏了吧？</div>
+            </div>
+
+            <div class="type-box">
+              <div class="type-kicker" id="resultModeKicker">你的主类型</div>
+              <div class="type-name" id="resultTypeName">CTRL（拿捏者）</div>
+              <div class="match" id="matchBadge">匹配度 92%</div>
+              <div class="type-subname" id="resultTypeSub">系统备注会显示在这里。</div>
+            </div>
+          </div>
+
+          <div class="analysis-box">
+            <h3 data-i18n="analysis_title">该人格的简单解读</h3>
+            <p id="resultDesc"></p>
+          </div>
+
+          <div class="dim-box">
+            <h3 data-i18n="dimension_title">十五维度评分</h3>
+            <div id="dimList" class="dim-list"></div>
+          </div>
+
+          <div class="note-box">
+            <h3 data-i18n="note_title">友情提示</h3>
+            <p id="funNote">本测试仅供娱乐，别拿它当诊断、面试、相亲、分手、招魂、算命或人生判决书。</p>
+          </div>
+
+          <details class="author-box">
+            <summary data-i18n="credit_title">说明与署名</summary>
+            <div class="author-content">
+              <p id="creditLine1">本页保留了原始 SBTI 题库与娱乐性人格映射逻辑，并将体验界面重新设计成更完整的品牌化版本，适合静态部署与二次开发。</p>
+              <p id="creditLine2">原始内容来源于 B 站 UP 主蛆肉儿串儿的 SBTI 测试项目。当前页面更偏向“复刻演示”和前端实现练习，不代表任何专业心理学结论。</p>
+              <p id="creditLine3">如果你后面要正式上线，建议继续替换文案、插图和人格名称，做成你自己的版本，这样产品识别度会更高，也更适合长期运营。</p>
+            </div>
+          </details>
+        </div>
+
+        <div class="result-actions">
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <button id="restartBtn" class="btn-secondary" data-i18n="restart_test">重新测试</button>
+            <button id="toTopBtn" class="btn-primary" data-i18n="to_home">回到首页</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer card">
+      <div class="site-footer-brand">
+        <strong>sbtitest.live</strong>
+        <span data-i18n="footer_tagline">一个更完整的 SBTI 双语测试体验。</span>
+      </div>
+      <div class="site-footer-meta">
+        <span data-i18n="footer_note">娱乐用途页面，请勿视为专业心理测评。</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

@@ -4,9 +4,9 @@ import { toAbsoluteUrl } from '@/lib/site';
 
 export const metadata: Metadata = {
   title:
-    'SBTI personality test online: instant quiz, type interpretation, result sharing and FAQ guide',
+    'SBTI test online: instant quiz, fast results, and type guide',
   description:
-    'Take the SBTI personality test online for free. Complete one-by-one questions in a modal, get your type and dimension scores instantly, compare SBTI vs MBTI, and explore the full type library with shareable results.',
+    'Take the SBTI test online for free in a one-by-one modal quiz. Get SBTI test results, dimension scores, and clear explanations on SBTI online for easy sharing.',
   alternates: {
     canonical: toAbsoluteUrl('/'),
     languages: {
@@ -17,17 +17,17 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title:
-      'SBTI personality test online: instant quiz, type interpretation, result sharing and FAQ guide',
+      'SBTI test online: instant quiz, fast results, and type guide',
     description:
-      'Take the SBTI personality test online for free. Complete one-by-one questions in a modal, get your type and dimension scores instantly, compare SBTI vs MBTI, and explore the full type library with shareable results.',
+      'Take the SBTI test online for free in a one-by-one modal quiz. Get SBTI test results, dimension scores, and clear explanations on SBTI online for easy sharing.',
     url: toAbsoluteUrl('/'),
     locale: 'en_US',
   },
   twitter: {
     title:
-      'SBTI personality test online: instant quiz, type interpretation, result sharing and FAQ guide',
+      'SBTI test online: instant quiz, fast results, and type guide',
     description:
-      'Take the SBTI personality test online for free. Complete one-by-one questions in a modal, get your type and dimension scores instantly, compare SBTI vs MBTI, and explore the full type library with shareable results.',
+      'Take the SBTI test online for free in a one-by-one modal quiz. Get SBTI test results, dimension scores, and clear explanations on SBTI online for easy sharing.',
   },
 };
 
