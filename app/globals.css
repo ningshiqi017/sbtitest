@@ -141,6 +141,9 @@ button {
     border-radius: 18px;
     padding: 10px 12px;
     gap: 6px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .site-nav-bottom nav {
@@ -150,10 +153,16 @@ button {
   .site-nav-bottom nav a {
     font-size: 12px;
     padding: 6px 10px;
+    white-space: nowrap;
   }
 
   .site-nav-bottom .site-brand {
     font-size: 13px;
+  }
+
+  /* 移动端底部导航 */
+  .site-nav-bottom {
+    margin: 10px 12px 24px;
   }
 }
 
@@ -858,19 +867,26 @@ button {
 @media (max-width: 640px) {
   .site-nav {
     border-radius: 18px;
-    align-items: flex-start;
-    flex-direction: column;
-    padding: 10px;
-    gap: 8px;
+    padding: 8px 12px;
+    gap: 12px;
+  }
+
+  .site-nav-top {
+    padding: 8px 12px;
   }
 
   .site-nav nav {
-    justify-content: flex-start;
+    justify-content: flex-end;
+    flex: 1;
   }
 
   .site-nav a {
     font-size: 12px;
     padding: 6px 9px;
+  }
+
+  .site-brand {
+    flex-shrink: 0;
   }
 
   .app-main {
@@ -993,16 +1009,7 @@ button {
     font-size: 16px;
   }
 
-  /* 移动端底部导航 */
-  .site-nav-bottom {
-    margin: 10px 12px 24px;
-  }
-
-  .site-nav-bottom .site-nav {
-    flex-wrap: wrap;
-  }
-}
-
+  
 /* 极小屏幕适配 (320px-374px) */
 @media (max-width: 374px) {
   .site-brand {
