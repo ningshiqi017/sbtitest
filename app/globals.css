@@ -136,6 +136,27 @@ button {
   margin: 10px auto 24px;
 }
 
+@media (max-width: 640px) {
+  .site-nav-bottom .site-nav {
+    border-radius: 18px;
+    padding: 10px 12px;
+    gap: 6px;
+  }
+
+  .site-nav-bottom nav {
+    gap: 4px;
+  }
+
+  .site-nav-bottom nav a {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  .site-nav-bottom .site-brand {
+    font-size: 13px;
+  }
+}
+
 .hero-screen {
   min-height: 100vh;
   display: grid;
@@ -722,6 +743,72 @@ button {
   gap: 10px;
 }
 
+.type-page-grid {
+  gap: 12px;
+}
+
+.type-page-card {
+  transition: transform 160ms ease, border-color 160ms ease;
+}
+
+.type-page-card:active {
+  transform: scale(0.98);
+}
+
+.type-link-item:active {
+  transform: scale(0.98);
+}
+
+.type-more-link:active {
+  transform: scale(0.98);
+}
+
+.ghost-btn:active,
+.primary-btn:active {
+  transform: scale(0.98);
+}
+
+/* 类型详情页移动端适配 */
+@media (max-width: 640px) {
+  .type-detail-page {
+    padding: 20px 12px 32px;
+  }
+
+  .type-detail-nav {
+    margin-top: 12px;
+    gap: 8px;
+  }
+
+  .type-detail-nav a {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  .type-detail-card {
+    padding: 16px 14px;
+  }
+
+  .type-detail-card img {
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+
+  .type-intro {
+    font-size: 14px;
+  }
+
+  .type-desc {
+    font-size: 14px;
+    line-height: 1.85;
+  }
+
+  .type-page-header h1 {
+    font-size: clamp(26px, 7vw, 34px);
+  }
+}
+
 .type-detail-card {
   margin-top: 12px;
   border: 1px solid var(--line);
@@ -810,6 +897,7 @@ button {
 
   .modal-shell {
     max-height: calc(100vh - 16px);
+    border-radius: 18px;
   }
 
   .modal-header {
@@ -832,5 +920,177 @@ button {
 
   .result-actions button {
     width: 100%;
+  }
+
+  /* 移动端选项按钮 - 增大触摸目标 */
+  .option-btn {
+    padding: 14px 16px;
+    min-height: 48px;
+  }
+
+  .option-code {
+    font-size: 16px;
+    width: 28px;
+    min-width: 28px;
+  }
+
+  /* 移动端 FAQ 触摸优化 */
+  .faq-card details {
+    margin-top: 12px;
+    padding-top: 12px;
+  }
+
+  .faq-card summary {
+    padding: 8px 0;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+  }
+
+  .faq-card details[open] summary {
+    margin-bottom: 8px;
+  }
+
+  /* 移动端内容卡片 */
+  .content-card {
+    padding: 16px 14px;
+  }
+
+  .content-card p {
+    line-height: 1.85;
+    font-size: 15px;
+  }
+
+  /* 移动端结果区域 */
+  .result-poster img {
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+
+  .result-main h3 {
+    font-size: clamp(28px, 8vw, 36px);
+  }
+
+  /* 移动端进度条 */
+  .progress-head {
+    font-size: 12px;
+  }
+
+  .question-title {
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* 移动端按钮文字 */
+  .primary-btn,
+  .ghost-btn {
+    font-size: 15px;
+    padding: 12px 18px;
+  }
+
+  .hero-start {
+    min-width: 100%;
+    font-size: 16px;
+  }
+
+  /* 移动端底部导航 */
+  .site-nav-bottom {
+    margin: 10px 12px 24px;
+  }
+
+  .site-nav-bottom .site-nav {
+    flex-wrap: wrap;
+  }
+}
+
+/* 极小屏幕适配 (320px-374px) */
+@media (max-width: 374px) {
+  .site-brand {
+    gap: 8px;
+  }
+
+  .site-brand img {
+    height: 32px;
+  }
+
+  .site-brand .brand-text {
+    font-size: 13px;
+  }
+
+  .site-nav a {
+    font-size: 11px;
+    padding: 5px 8px;
+  }
+
+  .hero-title {
+    font-size: clamp(32px, 10vw, 42px);
+  }
+
+  .content-card {
+    padding: 14px 12px;
+  }
+
+  .content-card h2 {
+    font-size: 20px;
+  }
+
+  .content-card p {
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  .type-link-item {
+    padding: 12px;
+  }
+
+  .type-link-top strong {
+    font-size: 13px;
+  }
+
+  .type-link-top span {
+    font-size: 12px;
+  }
+
+  .modal-header h3 {
+    font-size: 18px;
+  }
+
+  .modal-body,
+  .quiz-body,
+  .result-body {
+    padding: 12px 10px;
+  }
+
+  .option-btn {
+    padding: 12px 14px;
+    min-height: 44px;
+  }
+}
+
+/* 平板适配 (641px-1023px) */
+@media (min-width: 641px) and (max-width: 1023px) {
+  .hero-start {
+    min-width: 200px;
+  }
+
+  .type-link-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* 触摸设备优化 - 禁用hover效果提升 */
+@media (hover: none) and (pointer: coarse) {
+  .option-btn:active {
+    border-color: color-mix(in oklch, var(--brand) 72%, var(--ink));
+    background: color-mix(in oklch, var(--brand-soft) 64%, var(--paper));
+    transform: translateY(1px);
+  }
+
+  .primary-btn:active {
+    transform: translateY(1px);
+  }
+
+  .type-link-item:active {
+    transform: translateY(1px);
   }
 }
