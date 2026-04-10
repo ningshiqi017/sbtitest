@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
+import AdsenseScript from '@/components/adsense-script';
 import { Noto_Sans_SC, Noto_Serif_SC } from 'next/font/google';
 import GlobalFooter from '@/components/global-footer';
 import GlobalTopNav from '@/components/global-top-nav';
@@ -53,6 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={`${bodyFont.variable} ${displayFont.variable}`}>
+        <AdsenseScript />
         {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-EC4BWJB62P"

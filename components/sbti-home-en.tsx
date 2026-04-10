@@ -43,6 +43,28 @@ function getQuestionBadge(question: AnyQuestion): string {
   return '';
 }
 
+function XIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" className="share-icon">
+      <path
+        fill="currentColor"
+        d="M18.244 2H21.5l-7.113 8.13L22.75 22h-6.555l-5.134-6.72L5.18 22H1.92l7.607-8.695L1.5 2h6.721l4.64 6.13L18.244 2Zm-1.15 18.02h1.804L7.246 3.875H5.31L17.094 20.02Z"
+      />
+    </svg>
+  );
+}
+
+function InstagramIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" className="share-icon">
+      <path
+        fill="currentColor"
+        d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.9A3.85 3.85 0 0 0 3.9 7.75v8.5a3.85 3.85 0 0 0 3.85 3.85h8.5a3.85 3.85 0 0 0 3.85-3.85v-8.5a3.85 3.85 0 0 0-3.85-3.85h-8.5Zm8.95 1.55a1.05 1.05 0 1 1 0 2.1 1.05 1.05 0 0 1 0-2.1ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 1.9A3.1 3.1 0 1 0 12 15.1 3.1 3.1 0 0 0 12 8.9Z"
+      />
+    </svg>
+  );
+}
+
 export default function SbtiHomeEn() {
   const searchParams = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
@@ -54,7 +76,8 @@ export default function SbtiHomeEn() {
   const [shareCards, setShareCards] = useState<GeneratedShareCard[]>([]);
   const [shareStatus, setShareStatus] = useState('');
   const [isGeneratingShare, setIsGeneratingShare] = useState(false);
-  const [isSharingLink, setIsSharingLink] = useState(false);
+  const [isSharingX, setIsSharingX] = useState(false);
+  const [isSharingInstagram, setIsSharingInstagram] = useState(false);
   const [shareTokenHandled, setShareTokenHandled] = useState<string | null>(null);
   const [isSharedResult, setIsSharedResult] = useState(false);
 
@@ -226,24 +249,43 @@ export default function SbtiHomeEn() {
     await handleGenerateShareCards();
   };
 
-  const handleShareResultLink = async () => {
+  const buildResultShareLink = () => {
+    const token = buildShareResultToken(answers);
+    return `${window.location.origin}/?r=${encodeURIComponent(token)}`;
+  };
+
+  const handleShareToX = () => {
     if (!result) return;
-    setIsSharingLink(true);
     setShareStatus('');
 
     try {
-      const token = buildShareResultToken(answers);
-      const link = `${window.location.origin}/?r=${encodeURIComponent(token)}`;
-      const shareText = `I got ${result.finalType.code} (${result.finalType.cn}) on SBTI. Try it: ${link}`;
+      setIsSharingX(true);
+      const link = buildResultShareLink();
+      const intentUrl = `https://x.com/intent/tweet?url=${encodeURIComponent(link)}`;
+      const popup = window.open(intentUrl, '_blank', 'noopener,noreferrer');
+      if (!popup) {
+        window.prompt('Copy and share this result link on X', link);
+      }
+      setShareStatus('X sharing opened');
+    } catch {
+      setShareStatus('Failed to open X sharing');
+    } finally {
+      setIsSharingX(false);
+    }
+  };
+
+  const handleShareToInstagram = async () => {
+    if (!result) return;
+    setShareStatus('');
+
+    try {
+      setIsSharingInstagram(true);
+      const link = buildResultShareLink();
 
       if (typeof navigator.share === 'function') {
         try {
-          await navigator.share({
-            title: 'SBTI result',
-            text: shareText,
-            url: link,
-          });
-          setShareStatus('Share link generated');
+          await navigator.share({ url: link });
+          setShareStatus('Link ready for Instagram sharing');
           return;
         } catch {
           // Fallback to clipboard for browsers where native share is cancelled or unavailable.
@@ -252,15 +294,15 @@ export default function SbtiHomeEn() {
 
       try {
         await navigator.clipboard.writeText(link);
-        setShareStatus('Result link copied');
+        setShareStatus('Link copied for Instagram');
       } catch {
-        window.prompt('Copy and share this result link', link);
-        setShareStatus('Share link generated');
+        window.prompt('Copy and paste this link into Instagram', link);
+        setShareStatus('Link ready for Instagram');
       }
     } catch {
-      setShareStatus('Failed to generate share link');
+      setShareStatus('Failed to prepare Instagram sharing');
     } finally {
-      setIsSharingLink(false);
+      setIsSharingInstagram(false);
     }
   };
 
@@ -521,11 +563,20 @@ export default function SbtiHomeEn() {
                       {isSharedResult ? 'Take same test' : 'Retake'}
                     </button>
                     <button
-                      className="ghost-btn"
-                      onClick={handleShareResultLink}
-                      disabled={isSharingLink}
+                      className="ghost-btn social-share-btn share-x-btn"
+                      onClick={handleShareToX}
+                      disabled={isSharingX}
                     >
-                      {isSharingLink ? 'Working...' : 'Share link'}
+                      <XIcon />
+                      <span>{isSharingX ? 'Opening X...' : 'Share on X'}</span>
+                    </button>
+                    <button
+                      className="ghost-btn social-share-btn share-ig-btn"
+                      onClick={handleShareToInstagram}
+                      disabled={isSharingInstagram}
+                    >
+                      <InstagramIcon />
+                      <span>{isSharingInstagram ? 'Preparing...' : 'Share on Instagram'}</span>
                     </button>
                     <button
                       className="ghost-btn"
