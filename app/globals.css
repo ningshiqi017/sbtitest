@@ -745,6 +745,54 @@ button {
   color: var(--brand-strong);
 }
 
+.share-panel {
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: color-mix(in oklch, var(--paper) 88%, var(--brand-soft));
+  padding: 14px;
+}
+
+.share-panel h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.share-panel p {
+  margin: 6px 0 0;
+  color: var(--ink-soft);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.share-grid {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.share-card-preview {
+  border: 1px solid color-mix(in oklch, var(--line) 75%, var(--brand));
+  border-radius: 14px;
+  background: color-mix(in oklch, var(--paper) 90%, var(--brand-soft));
+  padding: 8px;
+  display: grid;
+  gap: 8px;
+}
+
+.share-card-preview img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid color-mix(in oklch, var(--line) 70%, var(--brand));
+}
+
+.share-card-preview .ghost-btn {
+  width: 100%;
+}
+
 .type-page {
   max-width: 1020px;
   margin: 0 auto;
@@ -1006,6 +1054,10 @@ button {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .share-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .result-top {
     grid-template-columns: 1fr;
   }
@@ -1081,6 +1133,10 @@ button {
 
   .type-link-grid,
   .type-page-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .share-grid {
     grid-template-columns: 1fr;
   }
 

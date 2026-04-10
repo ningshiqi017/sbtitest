@@ -5,6 +5,11 @@ import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import { typeImages, typeLibrary } from '@/lib/sbti-data';
 import {
+  generateShareCards,
+  triggerImageDownload,
+  type GeneratedShareCard,
+} from '@/lib/share-cards';
+import {
   buildQuestionSequence,
   computeResult,
   copywriting,
@@ -44,6 +49,9 @@ export default function SbtiHome() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [result, setResult] = useState<ComputedResult | null>(null);
   const [copyStatus, setCopyStatus] = useState('');
+  const [shareCards, setShareCards] = useState<GeneratedShareCard[]>([]);
+  const [shareStatus, setShareStatus] = useState('');
+  const [isGeneratingShare, setIsGeneratingShare] = useState(false);
 
   const visibleQuestions = useMemo(() => getVisibleQuestions(sequence, answers), [sequence, answers]);
   const answeredCount = useMemo(
@@ -78,6 +86,12 @@ export default function SbtiHome() {
     return () => window.clearTimeout(timer);
   }, [copyStatus]);
 
+  useEffect(() => {
+    if (!shareStatus) return;
+    const timer = window.setTimeout(() => setShareStatus(''), 1800);
+    return () => window.clearTimeout(timer);
+  }, [shareStatus]);
+
   const openTest = () => {
     setSequence(buildQuestionSequence());
     setAnswers({});
@@ -85,12 +99,15 @@ export default function SbtiHome() {
     setResult(null);
     setStage('quiz');
     setCopyStatus('');
+    setShareCards([]);
+    setShareStatus('');
     setIsOpen(true);
   };
 
   const closeModal = () => {
     setIsOpen(false);
     setCopyStatus('');
+    setShareStatus('');
   };
 
   const selectOption = (value: number) => {
@@ -134,6 +151,69 @@ export default function SbtiHome() {
     } catch {
       setCopyStatus('复制失败，请手动复制');
     }
+  };
+
+  const extractMatchRate = (currentResult: ComputedResult): number => {
+    const matched = currentResult.badge.match(/(\\d+)%/);
+    if (matched) return Number(matched[1]);
+    return currentResult.bestNormal.similarity;
+  };
+
+  const handleGenerateShareCards = async () => {
+    if (!result) return;
+    setIsGeneratingShare(true);
+    setShareStatus('');
+
+    try {
+      const posterUrl = new URL(typeImages[result.finalType.code], window.location.origin).toString();
+      const shareLink = `https://sbtitest.pro/zh?ref=share&type=${encodeURIComponent(result.finalType.code)}`;
+      const topDimensions = dimensionOrder
+        .map((dim) => ({
+          name: dimensionMeta[dim].name,
+          score: result.rawScores[dim],
+          level: result.levels[dim],
+        }))
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 3);
+
+      const cards = await generateShareCards({
+        locale: 'zh',
+        typeCode: result.finalType.code,
+        typeName: result.finalType.cn,
+        intro: result.finalType.intro,
+        description: result.finalType.desc,
+        badge: result.badge,
+        matchRate: extractMatchRate(result),
+        posterUrl,
+        shareLink,
+        websiteText: 'sbtitest.pro',
+        topDimensions,
+      });
+
+      setShareCards(cards);
+      setShareStatus('分享图片已生成');
+    } catch {
+      setShareStatus('分享图生成失败，请重试');
+    } finally {
+      setIsGeneratingShare(false);
+    }
+  };
+
+  const downloadSingleCard = (card: GeneratedShareCard) => {
+    triggerImageDownload(card.dataUrl, card.filename);
+    setShareStatus(`已下载第 ${card.id} 张`);
+  };
+
+  const downloadAllCards = async () => {
+    if (!shareCards.length) return;
+
+    for (const card of shareCards) {
+      triggerImageDownload(card.dataUrl, card.filename);
+      // Keep small delay so browsers are less likely to block multiple downloads.
+      // eslint-disable-next-line no-await-in-loop
+      await new Promise((resolve) => window.setTimeout(resolve, 180));
+    }
+    setShareStatus('已触发三张图片下载');
   };
 
   const progress = visibleQuestions.length
@@ -386,11 +466,43 @@ export default function SbtiHome() {
                     <button className="ghost-btn" onClick={copyResultSummary}>
                       复制分享文案
                     </button>
+                    <button
+                      className="ghost-btn"
+                      onClick={handleGenerateShareCards}
+                      disabled={isGeneratingShare}
+                    >
+                      {isGeneratingShare ? '生成中...' : '生成分享图'}
+                    </button>
+                    <button
+                      className="ghost-btn"
+                      onClick={downloadAllCards}
+                      disabled={!shareCards.length}
+                    >
+                      一键下载三张
+                    </button>
                     <button className="primary-btn" onClick={closeModal}>
                       回到首页
                     </button>
                   </footer>
                   {copyStatus ? <p className="copy-status">{copyStatus}</p> : null}
+                  {shareStatus ? <p className="copy-status">{shareStatus}</p> : null}
+
+                  {shareCards.length ? (
+                    <section className="share-panel">
+                      <h4>分享图片</h4>
+                      <p>已生成 3 张图片，适合发到小红书、B 站、朋友圈。</p>
+                      <div className="share-grid">
+                        {shareCards.map((card) => (
+                          <article key={card.id} className="share-card-preview">
+                            <img src={card.dataUrl} alt={`分享图 ${card.id}`} />
+                            <button className="ghost-btn" onClick={() => downloadSingleCard(card)}>
+                              下载第 {card.id} 张
+                            </button>
+                          </article>
+                        ))}
+                      </div>
+                    </section>
+                  ) : null}
                 </div>
               )}
             </motion.section>
