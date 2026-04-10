@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SBTI 人格测试 - MBTI已经过时，SBTI来了</title>
+  <meta name="description" content="SBTI 是一个轻松向的人格测试，借用了 MBTI 的结构灵感，但结果更贴近中文互联网语境的"自嘲式人格"。立即测试，看看你是哪种有趣的人格类型。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-0: oklch(0.97 0.02 135);
+      --bg-1: oklch(0.94 0.03 128);
+      --paper: oklch(0.985 0.008 120);
+      --ink: oklch(0.24 0.03 150);
+      --ink-soft: oklch(0.46 0.02 145);
+      --line: oklch(0.84 0.03 140);
+      --brand: oklch(0.48 0.11 153);
+      --brand-strong: oklch(0.39 0.1 154);
+      --brand-soft: oklch(0.9 0.05 145);
+      --accent-warm: oklch(0.72 0.11 58);
+      --radius-xl: 30px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --shadow-soft: 0 20px 56px color-mix(in oklch, var(--brand-strong) 18%, transparent);
+      --shadow-card: 0 10px 30px color-mix(in oklch, var(--ink) 8%, transparent);
+      --font-body: 'Noto Sans SC', 'PingFang SC', 'Noto Sans CJK SC', sans-serif;
+      --font-display: 'Noto Serif SC', 'Source Han Serif SC', serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: var(--font-body);
+      background:
+        radial-gradient(1200px 700px at 92% -12%, color-mix(in oklch, var(--brand) 22%, transparent), transparent 70%),
+        radial-gradient(1000px 600px at -12% 18%, color-mix(in oklch, var(--accent-warm) 16%, transparent), transparent 68%),
+        linear-gradient(180deg, var(--bg-0), var(--bg-1));
+      letter-spacing: 0.01em;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.14;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 2px, color-mix(in oklch, var(--ink) 8%, transparent) 2px, color-mix(in oklch, var(--ink) 8%, transparent) 3px),
+        repeating-linear-gradient(90deg, transparent, transparent 3px, color-mix(in oklch, var(--ink) 6%, transparent) 3px, color-mix(in oklch, var(--ink) 6%, transparent) 4px);
+      z-index: -1;
+    }
+
+    a {
+      color: var(--brand-strong);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .landing-page {
+      min-height: 100vh;
+    }
+
+    /* Navigation */
+    .site-nav {
+      width: min(1120px, calc(100% - 24px));
+      margin: 12px auto 0;
+      border: 1px solid color-mix(in oklch, var(--line) 70%, var(--brand));
+      background: color-mix(in oklch, var(--paper) 88%, var(--brand-soft));
+      border-radius: 999px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 8px 24px color-mix(in oklch, var(--ink) 6%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 9px 14px 9px 16px;
+    }
+
+    .site-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      height: 40px;
+    }
+
+    .brand-text {
+      font-family: var(--font-display);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      font-size: 15px;
+      color: var(--brand-strong);
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-links a {
+      color: color-mix(in oklch, var(--ink) 78%, var(--brand));
+      text-decoration: none;
+      border-radius: 999px;
+      padding: 7px 11px;
+      font-size: 13px;
+      line-height: 1;
+      transition: background-color 160ms ease, color 160ms ease;
+    }
+
+    .nav-links a:hover {
+      background: color-mix(in oklch, var(--brand-soft) 70%, var(--paper));
+      color: var(--brand-strong);
+      text-decoration: none;
+    }
+
+    /* Hero */
+    .hero-screen {
+      min-height: calc(100vh - 72px);
+      display: grid;
+      align-content: start;
+      justify-content: center;
+      justify-items: center;
+      gap: clamp(20px, 3.6vw, 36px);
+      padding: clamp(60px, 12vh, 120px) clamp(20px, 3.5vw, 42px) clamp(20px, 3.5vw, 42px);
+    }
+
+    .hero-title {
+      margin: 0;
+      max-width: 18ch;
+      text-align: center;
+      font-family: var(--font-display);
+      font-size: clamp(42px, 7.6vw, 90px);
+      line-height: 1.04;
+      letter-spacing: 0.01em;
+      text-wrap: balance;
+      text-shadow: 0 8px 22px color-mix(in oklch, var(--brand-strong) 10%, transparent);
+    }
+
+    .primary-btn {
+      background: linear-gradient(170deg, color-mix(in oklch, var(--brand) 92%, white), var(--brand-strong));
+      color: var(--paper);
+      font-family: var(--font-body);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 12px 22px;
+      min-width: 176px;
+      font-size: 17px;
+      border-radius: 999px;
+      border: 0;
+      cursor: pointer;
+      box-shadow:
+        0 14px 24px color-mix(in oklch, var(--brand-strong) 28%, transparent),
+        inset 0 1px 0 color-mix(in oklch, white 34%, transparent);
+      transition: transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 200ms ease;
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .primary-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Content */
+    .content-wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: clamp(14px, 2.6vw, 28px) 16px 68px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .content-card {
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--line);
+      background: color-mix(in oklch, var(--paper) 92%, var(--brand-soft));
+      box-shadow: var(--shadow-card);
+      padding: clamp(16px, 2vw, 26px);
+      scroll-margin-top: 88px;
+    }
+
+    .content-card h2 {
+      margin: 0 0 10px;
+      font-size: clamp(22px, 2.6vw, 30px);
+      line-height: 1.1;
+      letter-spacing: 0.02em;
+      font-family: var(--font-display);
+    }
+
+    .content-card p {
+      margin: 0;
+      color: color-mix(in oklch, var(--ink) 76%, var(--brand));
+      line-height: 1.92;
+    }
+
+    .type-more-wrap {
+      margin-top: 12px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .type-more-link {
+      text-decoration: none;
+      color: var(--brand-strong);
+      border-radius: 999px;
+      border: 1px solid color-mix(in oklch, var(--line) 68%, var(--brand));
+      background: color-mix(in oklch, var(--paper) 88%, var(--brand-soft));
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease;
+    }
+
+    .type-more-link:hover {
+      transform: translateY(-2px);
+      border-color: color-mix(in oklch, var(--brand) 38%, var(--line));
+      text-decoration: none;
+    }
+
+    .type-more-link:active {
+      transform: scale(0.98);
+    }
+
+    .type-link-grid {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .type-link-item {
+      display: block;
+      text-decoration: none;
+      border-radius: 16px;
+      border: 1px solid color-mix(in oklch, var(--line) 74%, var(--brand));
+      background: color-mix(in oklch, var(--paper) 84%, var(--brand-soft));
+      padding: 11px 12px;
+      transition: transform 160ms ease, border-color 160ms ease;
+    }
+
+    .type-link-item:hover {
+      transform: translateY(-2px);
+      border-color: color-mix(in oklch, var(--brand) 38%, var(--line));
+      text-decoration: none;
+    }
+
+    .type-link-item:active {
+      transform: scale(0.98);
+    }
+
+    .type-link-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .type-link-top strong {
+      color: var(--brand-strong);
+      font-size: 14px;
+    }
+
+    .type-link-top span {
+      color: color-mix(in oklch, var(--ink) 70%, var(--brand));
+      font-size: 13px;
+    }
+
+    .type-link-item p {
+      margin-top: 6px;
+      color: var(--ink-soft);
+      line-height: 1.65;
+      font-size: 12px;
+    }
+
+    /* FAQ */
+    .faq-card details {
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 1px dashed color-mix(in oklch, var(--line) 70%, var(--brand));
+    }
+
+    .faq-card summary {
+      cursor: pointer;
+      font-weight: 700;
+      padding: 8px 0;
+    }
+
+    .faq-card details p {
+      margin-top: 8px;
+      color: var(--ink-soft);
+      line-height: 1.8;
+    }
+
+    .faq-card details[open] summary {
+      margin-bottom: 4px;
+    }
+
+    /* Footer */
+    .site-footer {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 24px 16px 32px;
+      text-align: center;
+      color: var(--ink-soft);
+      font-size: 13px;
+      border-top: 1px solid color-mix(in oklch, var(--line) 60%, var(--brand));
+    }
+
+    .site-footer a {
+      color: var(--brand-strong);
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .site-nav {
+        border-radius: 18px;
+        padding: 10px 12px;
+        gap: 6px;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .nav-links {
+        gap: 4px;
+      }
+
+      .nav-links a {
+        font-size: 12px;
+        padding: 6px 10px;
+        white-space: nowrap;
+      }
+
+      .site-brand .brand-text {
+        font-size: 13px;
+      }
+
+      .hero-screen {
+        padding: 60px 16px 20px;
+        min-height: auto;
+        padding-top: 80px;
+      }
+
+      .hero-title {
+        line-height: 1.04;
+      }
+
+      .primary-btn {
+        min-width: 100%;
+        font-size: 16px;
+      }
+
+      .content-wrap {
+        padding: 8px 12px 44px;
+      }
+
+      .type-link-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .content-card {
+        padding: 16px 14px;
+      }
+
+      .content-card p {
+        line-height: 1.85;
+        font-size: 15px;
+      }
+
+      .faq-card summary {
+        padding: 10px 0;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+      }
+
+      .faq-card details[open] summary {
+        margin-bottom: 8px;
+      }
+    }
+
+    @media (max-width: 374px) {
+      .hero-title {
+        font-size: clamp(32px, 10vw, 42px);
+      }
+
+      .content-card {
+        padding: 14px 12px;
+      }
+
+      .content-card h2 {
+        font-size: 20px;
+      }
+
+      .content-card p {
+        font-size: 14px;
+        line-height: 1.8;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="landing-page">
+    <!-- Navigation -->
+    <nav class="site-nav">
+      <div class="site-brand">
+        <span class="brand-text">SBTI</span>
+      </div>
+      <div class="nav-links">
+        <a href="https://sbtitest.pro/zh#about">关于测试</a>
+        <a href="https://sbtitest.pro/zh/types">人格类型</a>
+        <a href="https://sbtitest.pro/zh/what-is-sbti">了解更多</a>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero-screen">
+      <h1 class="hero-title">MBTI已经过时，SBTI来了。</h1>
+      <a href="https://sbtitest.pro/zh" class="primary-btn">开始测试</a>
+    </section>
+
+    <!-- Content -->
+    <section class="content-wrap" id="about">
+      <article class="content-card" id="what-is-sbti">
+        <h2>SBTI 是什么</h2>
+        <p>
+          SBTI 全称 Silly Big Personality Test，是一个轻松向的人格测试。它借用了 MBTI
+          的结构灵感，但结果并不是严肃心理学标签，而是更贴近中文互联网语境的"自嘲式人格"，比如"死者""吗喽""ATM-er"。
+          你可以把它当成一面带幽默滤镜的镜子：快速测、快速懂、快速分享。它的核心价值是娱乐和社交传播，而不是学术诊断。
+        </p>
+        <div class="type-more-wrap">
+          <a href="https://sbtitest.pro/zh/what-is-sbti" class="type-more-link">查看完整说明</a>
+        </div>
+      </article>
+
+      <article class="content-card" id="vs-mbti">
+        <h2>SBTI 和 MBTI 有什么区别</h2>
+        <p>
+          MBTI 是经典的人格模型，有明确理论来源，常用于自我认知和沟通风格讨论。SBTI 的目标完全不同：
+          它不追求科学严谨，更像一种当代青年语境里的表达游戏。SBTI 用荒诞和梗文化描述处境，把"解释自己"这件事变得更轻松。
+          两者都能带来"被看见"的感觉，但 MBTI 偏分析框架，SBTI 偏幽默共鸣与社交话题。
+        </p>
+        <div class="type-more-wrap">
+          <a href="https://sbtitest.pro/zh/sbti-vs-mbti" class="type-more-link">查看对比详情</a>
+        </div>
+      </article>
+
+      <article class="content-card" id="how-to-play">
+        <h2>测试包含哪些内容 / 怎么测</h2>
+        <p>
+          当前版本包含 30 道主问题，围绕 15 个维度评估作答倾向；根据你的选择，还会插入补充题分支。
+          交互方式是单题逐条模式：点击选项后自动进入下一题，支持上一题返回调整。完成后会即时展示人格名称、匹配说明、十五维度解读，
+          并提供可复制的分享文案，方便你一键发到社交平台。
+        </p>
+        <div class="type-more-wrap">
+          <a href="https://sbtitest.pro/zh/how-sbti-test-works" class="type-more-link">查看测试流程</a>
+        </div>
+      </article>
+
+      <article class="content-card" id="types">
+        <h2>有哪些人格类型</h2>
+        <p>
+          SBTI 目前包含 27 种人格类型，覆盖从"拿捏者""僧人"到"死者""酒鬼"等不同表达风格。每一种类型都对应独立解释，
+          你可以先看下方精选类型，点击"查看更多人格类型"进入完整汇总页。
+        </p>
+        <div class="type-link-grid">
+          <a href="https://sbtitest.pro/zh/types/CTRL" class="type-link-item">
+            <div class="type-link-top">
+              <strong>CTRL</strong>
+              <span>拿捏者</span>
+            </div>
+            <p>一切尽在掌握，绝对不让自己失控</p>
+          </a>
+          <a href="https://sbtitest.pro/zh/types/MONK" class="type-link-item">
+            <div class="type-link-top">
+              <strong>MONK</strong>
+              <span>僧人</span>
+            </div>
+            <p>无欲无求，看淡一切，内心平静如水</p>
+          </a>
+          <a href="https://sbtitest.pro/zh/types/DEAD" class="type-link-item">
+            <div class="type-link-top">
+              <strong>DEAD</strong>
+              <span>死者</span>
+            </div>
+            <p>精神已逝，肉体仍在运转的"活死人"</p>
+          </a>
+        </div>
+        <div class="type-more-wrap">
+          <a href="https://sbtitest.pro/zh/types" class="type-more-link">查看更多人格类型</a>
+        </div>
+      </article>
+
+      <article class="content-card" id="why-hot">
+        <h2>为什么 SBTI 会火 / 背后说明了什么</h2>
+        <p>
+          SBTI 的走红，本质上是一种"用幽默消解压力"的集体表达。相比长篇解释自己，年轻人更愿意用一个荒诞但准确的标签快速对齐情绪：
+          既能自嘲，也能破冰，还能形成社交货币。当测试结果变成可转发的内容，个体情绪就会转化为传播节点，这也是 SBTI
+          在社媒平台持续扩散的重要原因。
+        </p>
+      </article>
+
+      <article class="content-card faq-card" id="faq">
+        <h2>FAQ</h2>
+        <details>
+          <summary>SBTI 和 MBTI 的区别是什么？</summary>
+          <p>MBTI 偏心理模型，SBTI 偏娱乐表达。前者强调结构化认知，后者强调社交语境下的幽默共鸣。</p>
+        </details>
+        <details>
+          <summary>SBTI 有多少种人格？</summary>
+          <p>当前版本共 27 种人格类型，后续会继续完善描述和类型详情页。</p>
+        </details>
+        <details>
+          <summary>SBTI 测试免费吗？</summary>
+          <p>目前在线版本免费使用，打开首页即可测试，不需要注册。</p>
+        </details>
+        <details>
+          <summary>点击开始测试后会怎样？</summary>
+          <p>点击"开始测试"按钮后会跳转到 SBTI 正式网站，在弹窗中完成测试和结果查看。</p>
+        </details>
+      </article>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <p>SBTI 人格测试 &copy; 2024-2026 | <a href="https://sbtitest.pro/zh">访问正式网站</a></p>
+    </footer>
+  </div>
+</body>
+</html>

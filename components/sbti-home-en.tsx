@@ -2,8 +2,10 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import { typeImages, typeLibrary } from '@/lib/sbti-data-en';
+import { buildShareResultToken, parseShareResultToken } from '@/lib/share-link';
 import {
   generateShareCards,
   triggerImageDownload,
@@ -42,16 +44,19 @@ function getQuestionBadge(question: AnyQuestion): string {
 }
 
 export default function SbtiHomeEn() {
+  const searchParams = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
   const [stage, setStage] = useState<ModalStage>('quiz');
   const [sequence, setSequence] = useState<AnyQuestion[]>([]);
   const [answers, setAnswers] = useState<AnswerMap>({});
   const [currentIndex, setCurrentIndex] = useState(0);
   const [result, setResult] = useState<ComputedResult | null>(null);
-  const [copyStatus, setCopyStatus] = useState('');
   const [shareCards, setShareCards] = useState<GeneratedShareCard[]>([]);
   const [shareStatus, setShareStatus] = useState('');
   const [isGeneratingShare, setIsGeneratingShare] = useState(false);
+  const [isSharingLink, setIsSharingLink] = useState(false);
+  const [shareTokenHandled, setShareTokenHandled] = useState<string | null>(null);
+  const [isSharedResult, setIsSharedResult] = useState(false);
 
   const visibleQuestions = useMemo(() => getVisibleQuestions(sequence, answers), [sequence, answers]);
   const answeredCount = useMemo(
@@ -81,16 +86,29 @@ export default function SbtiHomeEn() {
   }, [visibleQuestions.length, currentIndex]);
 
   useEffect(() => {
-    if (!copyStatus) return;
-    const timer = window.setTimeout(() => setCopyStatus(''), 1400);
-    return () => window.clearTimeout(timer);
-  }, [copyStatus]);
-
-  useEffect(() => {
     if (!shareStatus) return;
     const timer = window.setTimeout(() => setShareStatus(''), 1800);
     return () => window.clearTimeout(timer);
   }, [shareStatus]);
+
+  useEffect(() => {
+    const token = searchParams.get('r');
+    if (!token || token === shareTokenHandled) return;
+    setShareTokenHandled(token);
+
+    const decodedAnswers = parseShareResultToken(token);
+    if (!decodedAnswers) return;
+
+    setSequence(buildQuestionSequence());
+    setAnswers(decodedAnswers);
+    setCurrentIndex(0);
+    setResult(computeResult(decodedAnswers));
+    setStage('result');
+    setShareCards([]);
+    setShareStatus('Shared result loaded');
+    setIsSharedResult(true);
+    setIsOpen(true);
+  }, [searchParams, shareTokenHandled]);
 
   const openTest = () => {
     setSequence(buildQuestionSequence());
@@ -98,15 +116,14 @@ export default function SbtiHomeEn() {
     setCurrentIndex(0);
     setResult(null);
     setStage('quiz');
-    setCopyStatus('');
     setShareCards([]);
     setShareStatus('');
+    setIsSharedResult(false);
     setIsOpen(true);
   };
 
   const closeModal = () => {
     setIsOpen(false);
-    setCopyStatus('');
     setShareStatus('');
   };
 
@@ -141,18 +158,6 @@ export default function SbtiHomeEn() {
     setCurrentIndex((prev) => Math.max(prev - 1, 0));
   };
 
-  const copyResultSummary = async () => {
-    if (!result) return;
-
-    const text = `${result.finalType.code} (${result.finalType.cn})\n${result.badge}\n${result.finalType.intro}`;
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopyStatus('Summary copied');
-    } catch {
-      setCopyStatus('Copy failed, please copy manually');
-    }
-  };
-
   const extractMatchRate = (currentResult: ComputedResult): number => {
     const matched = currentResult.badge.match(/(\\d+)%/);
     if (matched) return Number(matched[1]);
@@ -166,7 +171,6 @@ export default function SbtiHomeEn() {
 
     try {
       const posterUrl = new URL(typeImages[result.finalType.code], window.location.origin).toString();
-      const shareLink = `https://sbtitest.pro/?ref=share&type=${encodeURIComponent(result.finalType.code)}`;
       const topDimensions = dimensionOrder
         .map((dim) => ({
           name: dimensionMeta[dim].name,
@@ -185,8 +189,6 @@ export default function SbtiHomeEn() {
         badge: result.badge,
         matchRate: extractMatchRate(result),
         posterUrl,
-        shareLink,
-        websiteText: 'sbtitest.pro',
         topDimensions,
       });
 
@@ -213,7 +215,53 @@ export default function SbtiHomeEn() {
       // eslint-disable-next-line no-await-in-loop
       await new Promise((resolve) => window.setTimeout(resolve, 180));
     }
-    setShareStatus('Triggered all 3 downloads');
+    setShareStatus('Download triggered');
+  };
+
+  const handleShareAction = async () => {
+    if (shareCards.length) {
+      await downloadAllCards();
+      return;
+    }
+    await handleGenerateShareCards();
+  };
+
+  const handleShareResultLink = async () => {
+    if (!result) return;
+    setIsSharingLink(true);
+    setShareStatus('');
+
+    try {
+      const token = buildShareResultToken(answers);
+      const link = `${window.location.origin}/?r=${encodeURIComponent(token)}`;
+      const shareText = `I got ${result.finalType.code} (${result.finalType.cn}) on SBTI. Try it: ${link}`;
+
+      if (typeof navigator.share === 'function') {
+        try {
+          await navigator.share({
+            title: 'SBTI result',
+            text: shareText,
+            url: link,
+          });
+          setShareStatus('Share link generated');
+          return;
+        } catch {
+          // Fallback to clipboard for browsers where native share is cancelled or unavailable.
+        }
+      }
+
+      try {
+        await navigator.clipboard.writeText(link);
+        setShareStatus('Result link copied');
+      } catch {
+        window.prompt('Copy and share this result link', link);
+        setShareStatus('Share link generated');
+      }
+    } catch {
+      setShareStatus('Failed to generate share link');
+    } finally {
+      setIsSharingLink(false);
+    }
   };
 
   const progress = visibleQuestions.length
@@ -470,36 +518,36 @@ export default function SbtiHomeEn() {
 
                   <footer className="result-actions">
                     <button className="ghost-btn" onClick={openTest}>
-                      Retake
-                    </button>
-                    <button className="ghost-btn" onClick={copyResultSummary}>
-                      Copy summary
+                      {isSharedResult ? 'Take same test' : 'Retake'}
                     </button>
                     <button
                       className="ghost-btn"
-                      onClick={handleGenerateShareCards}
+                      onClick={handleShareResultLink}
+                      disabled={isSharingLink}
+                    >
+                      {isSharingLink ? 'Working...' : 'Share link'}
+                    </button>
+                    <button
+                      className="ghost-btn"
+                      onClick={handleShareAction}
                       disabled={isGeneratingShare}
                     >
-                      {isGeneratingShare ? 'Generating...' : 'Generate share cards'}
-                    </button>
-                    <button
-                      className="ghost-btn"
-                      onClick={downloadAllCards}
-                      disabled={!shareCards.length}
-                    >
-                      Download all 3
+                      {isGeneratingShare
+                        ? 'Generating...'
+                        : shareCards.length
+                          ? 'One-click download'
+                          : 'Generate share cards'}
                     </button>
                     <button className="primary-btn" onClick={closeModal}>
                       Back to homepage
                     </button>
                   </footer>
-                  {copyStatus ? <p className="copy-status">{copyStatus}</p> : null}
                   {shareStatus ? <p className="copy-status">{shareStatus}</p> : null}
 
                   {shareCards.length ? (
                     <section className="share-panel">
                       <h4>Share Cards</h4>
-                      <p>3 cards are ready for Xiaohongshu, Bilibili, and social feeds.</p>
+                      <p>Share cards are ready for Xiaohongshu, Bilibili, and social feeds.</p>
                       <div className="share-grid">
                         {shareCards.map((card) => (
                           <article key={card.id} className="share-card-preview">

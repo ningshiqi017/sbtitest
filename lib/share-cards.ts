@@ -1,5 +1,3 @@
-import QRCode from 'qrcode';
-
 export type ShareDimensionLine = {
   name: string;
   score: number;
@@ -15,8 +13,6 @@ export type ShareCardPayload = {
   badge: string;
   matchRate: number;
   posterUrl: string;
-  shareLink: string;
-  websiteText: string;
   topDimensions: ShareDimensionLine[];
 };
 
@@ -186,12 +182,16 @@ function renderCardOne(payload: ShareCardPayload, poster: HTMLImageElement): str
   ctx.drawImage(poster, drawX, drawY, drawW, drawH);
 
   ctx.fillStyle = '#14532d';
-  ctx.font = '600 36px "Noto Sans SC", "PingFang SC", sans-serif';
-  drawMultiline(ctx, payload.intro, 80, 1260, 920, 48, 2, payload.locale === 'zh' ? 'char' : 'word');
+  ctx.font = '600 34px "Noto Sans SC", "PingFang SC", sans-serif';
+  drawMultiline(ctx, payload.intro, 80, 1240, 920, 44, 2, payload.locale === 'zh' ? 'char' : 'word');
 
-  ctx.fillStyle = '#2f5c42';
-  ctx.font = '600 30px "Noto Sans SC", "PingFang SC", sans-serif';
-  ctx.fillText(payload.websiteText, 80, 1370);
+  ctx.fillStyle = '#1d3e2a';
+  ctx.font = '500 26px "Noto Sans SC", "PingFang SC", sans-serif';
+  ctx.fillText(
+    payload.locale === 'zh' ? '结果仅供娱乐，欢迎和朋友一起对照讨论。' : 'For fun only. Compare your result with friends.',
+    80,
+    1360,
+  );
 
   return canvas.toDataURL('image/png');
 }
@@ -232,18 +232,22 @@ function renderCardTwo(payload: ShareCardPayload): string {
     590,
     820,
     44,
-    15,
+    13,
     payload.locale === 'zh' ? 'char' : 'word',
   );
 
-  ctx.fillStyle = '#2f5c42';
-  ctx.font = '600 30px "Noto Sans SC", "PingFang SC", sans-serif';
-  ctx.fillText(payload.websiteText, 130, 1280);
+  ctx.fillStyle = '#1d3e2a';
+  ctx.font = '500 26px "Noto Sans SC", "PingFang SC", sans-serif';
+  ctx.fillText(
+    payload.locale === 'zh' ? '关键词：人格画像、行为倾向、社交风格。' : 'Keywords: personality profile, behavior, social style.',
+    130,
+    1300,
+  );
 
   return canvas.toDataURL('image/png');
 }
 
-function renderCardThree(payload: ShareCardPayload, qrImage: HTMLImageElement): string {
+function renderCardThree(payload: ShareCardPayload): string {
   const { canvas, ctx } = createCanvas();
   drawBackground(ctx);
 
@@ -280,39 +284,28 @@ function renderCardThree(payload: ShareCardPayload, qrImage: HTMLImageElement): 
     ctx.fillText(`${index + 1}. ${line.name} · ${line.level} / ${line.score}`, 120, 680 + index * 94);
   });
 
-  drawRoundedRect(ctx, 80, 1060, 920, 300, 30);
+  drawRoundedRect(ctx, 80, 1060, 920, 220, 30);
   ctx.fillStyle = '#14532d';
   ctx.fill();
-
-  ctx.drawImage(qrImage, 740, 1120, 200, 200);
   ctx.fillStyle = '#f3faf5';
-  ctx.font = '700 52px "Noto Serif SC", "Source Han Serif SC", serif';
-  ctx.fillText(payload.websiteText, 120, 1216);
-
+  ctx.font = '700 50px "Noto Serif SC", "Source Han Serif SC", serif';
+  ctx.fillText(payload.locale === 'zh' ? '分享这张匹配率图' : 'Share this match-rate card', 120, 1170);
   ctx.font = '500 28px "Noto Sans SC", "PingFang SC", sans-serif';
   ctx.fillText(
-    payload.locale === 'zh' ? '扫码测同款人格' : 'Scan to take the SBTI test',
+    payload.locale === 'zh' ? '让朋友一起测同款人格。' : 'Invite friends to test the same type.',
     120,
-    1270,
+    1222,
   );
 
   return canvas.toDataURL('image/png');
 }
 
 export async function generateShareCards(payload: ShareCardPayload): Promise<GeneratedShareCard[]> {
-  const [posterImage, qrDataUrl] = await Promise.all([
-    loadImage(payload.posterUrl),
-    QRCode.toDataURL(payload.shareLink, {
-      width: 320,
-      margin: 1,
-      color: { dark: '#14532d', light: '#FFFFFFFF' },
-    }),
-  ]);
-  const qrImage = await loadImage(qrDataUrl);
+  const posterImage = await loadImage(payload.posterUrl);
 
   const card1 = renderCardOne(payload, posterImage);
   const card2 = renderCardTwo(payload);
-  const card3 = renderCardThree(payload, qrImage);
+  const card3 = renderCardThree(payload);
 
   return [
     { id: 1, filename: `sbti-share-1-${payload.typeCode}.png`, dataUrl: card1 },

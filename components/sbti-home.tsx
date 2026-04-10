@@ -2,8 +2,10 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import { typeImages, typeLibrary } from '@/lib/sbti-data';
+import { buildShareResultToken, parseShareResultToken } from '@/lib/share-link';
 import {
   generateShareCards,
   triggerImageDownload,
@@ -42,16 +44,19 @@ function getQuestionBadge(question: AnyQuestion): string {
 }
 
 export default function SbtiHome() {
+  const searchParams = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
   const [stage, setStage] = useState<ModalStage>('quiz');
   const [sequence, setSequence] = useState<AnyQuestion[]>([]);
   const [answers, setAnswers] = useState<AnswerMap>({});
   const [currentIndex, setCurrentIndex] = useState(0);
   const [result, setResult] = useState<ComputedResult | null>(null);
-  const [copyStatus, setCopyStatus] = useState('');
   const [shareCards, setShareCards] = useState<GeneratedShareCard[]>([]);
   const [shareStatus, setShareStatus] = useState('');
   const [isGeneratingShare, setIsGeneratingShare] = useState(false);
+  const [isSharingLink, setIsSharingLink] = useState(false);
+  const [shareTokenHandled, setShareTokenHandled] = useState<string | null>(null);
+  const [isSharedResult, setIsSharedResult] = useState(false);
 
   const visibleQuestions = useMemo(() => getVisibleQuestions(sequence, answers), [sequence, answers]);
   const answeredCount = useMemo(
@@ -81,16 +86,29 @@ export default function SbtiHome() {
   }, [visibleQuestions.length, currentIndex]);
 
   useEffect(() => {
-    if (!copyStatus) return;
-    const timer = window.setTimeout(() => setCopyStatus(''), 1400);
-    return () => window.clearTimeout(timer);
-  }, [copyStatus]);
-
-  useEffect(() => {
     if (!shareStatus) return;
     const timer = window.setTimeout(() => setShareStatus(''), 1800);
     return () => window.clearTimeout(timer);
   }, [shareStatus]);
+
+  useEffect(() => {
+    const token = searchParams.get('r');
+    if (!token || token === shareTokenHandled) return;
+    setShareTokenHandled(token);
+
+    const decodedAnswers = parseShareResultToken(token);
+    if (!decodedAnswers) return;
+
+    setSequence(buildQuestionSequence());
+    setAnswers(decodedAnswers);
+    setCurrentIndex(0);
+    setResult(computeResult(decodedAnswers));
+    setStage('result');
+    setShareCards([]);
+    setShareStatus('已打开分享结果');
+    setIsSharedResult(true);
+    setIsOpen(true);
+  }, [searchParams, shareTokenHandled]);
 
   const openTest = () => {
     setSequence(buildQuestionSequence());
@@ -98,15 +116,14 @@ export default function SbtiHome() {
     setCurrentIndex(0);
     setResult(null);
     setStage('quiz');
-    setCopyStatus('');
     setShareCards([]);
     setShareStatus('');
+    setIsSharedResult(false);
     setIsOpen(true);
   };
 
   const closeModal = () => {
     setIsOpen(false);
-    setCopyStatus('');
     setShareStatus('');
   };
 
@@ -141,18 +158,6 @@ export default function SbtiHome() {
     setCurrentIndex((prev) => Math.max(prev - 1, 0));
   };
 
-  const copyResultSummary = async () => {
-    if (!result) return;
-
-    const text = `${result.finalType.code}（${result.finalType.cn}）\n${result.badge}\n${result.finalType.intro}`;
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopyStatus('结果摘要已复制');
-    } catch {
-      setCopyStatus('复制失败，请手动复制');
-    }
-  };
-
   const extractMatchRate = (currentResult: ComputedResult): number => {
     const matched = currentResult.badge.match(/(\\d+)%/);
     if (matched) return Number(matched[1]);
@@ -166,7 +171,6 @@ export default function SbtiHome() {
 
     try {
       const posterUrl = new URL(typeImages[result.finalType.code], window.location.origin).toString();
-      const shareLink = `https://sbtitest.pro/zh?ref=share&type=${encodeURIComponent(result.finalType.code)}`;
       const topDimensions = dimensionOrder
         .map((dim) => ({
           name: dimensionMeta[dim].name,
@@ -185,8 +189,6 @@ export default function SbtiHome() {
         badge: result.badge,
         matchRate: extractMatchRate(result),
         posterUrl,
-        shareLink,
-        websiteText: 'sbtitest.pro',
         topDimensions,
       });
 
@@ -213,7 +215,53 @@ export default function SbtiHome() {
       // eslint-disable-next-line no-await-in-loop
       await new Promise((resolve) => window.setTimeout(resolve, 180));
     }
-    setShareStatus('已触发三张图片下载');
+    setShareStatus('已触发下载');
+  };
+
+  const handleShareAction = async () => {
+    if (shareCards.length) {
+      await downloadAllCards();
+      return;
+    }
+    await handleGenerateShareCards();
+  };
+
+  const handleShareResultLink = async () => {
+    if (!result) return;
+    setIsSharingLink(true);
+    setShareStatus('');
+
+    try {
+      const token = buildShareResultToken(answers);
+      const link = `${window.location.origin}/zh?r=${encodeURIComponent(token)}`;
+      const shareText = `我测出了 ${result.finalType.code}（${result.finalType.cn}），来测同款：${link}`;
+
+      if (typeof navigator.share === 'function') {
+        try {
+          await navigator.share({
+            title: 'SBTI 测试结果',
+            text: shareText,
+            url: link,
+          });
+          setShareStatus('分享链接已生成');
+          return;
+        } catch {
+          // Fallback to clipboard for browsers where native share is cancelled or unavailable.
+        }
+      }
+
+      try {
+        await navigator.clipboard.writeText(link);
+        setShareStatus('结果链接已复制');
+      } catch {
+        window.prompt('复制这个结果链接分享给朋友', link);
+        setShareStatus('结果链接已生成');
+      }
+    } catch {
+      setShareStatus('结果链接生成失败，请重试');
+    } finally {
+      setIsSharingLink(false);
+    }
   };
 
   const progress = visibleQuestions.length
@@ -461,36 +509,32 @@ export default function SbtiHome() {
 
                   <footer className="result-actions">
                     <button className="ghost-btn" onClick={openTest}>
-                      重新测试
-                    </button>
-                    <button className="ghost-btn" onClick={copyResultSummary}>
-                      复制分享文案
+                      {isSharedResult ? '测同款' : '重新测试'}
                     </button>
                     <button
                       className="ghost-btn"
-                      onClick={handleGenerateShareCards}
+                      onClick={handleShareResultLink}
+                      disabled={isSharingLink}
+                    >
+                      {isSharingLink ? '处理中...' : '一键分享'}
+                    </button>
+                    <button
+                      className="ghost-btn"
+                      onClick={handleShareAction}
                       disabled={isGeneratingShare}
                     >
-                      {isGeneratingShare ? '生成中...' : '生成分享图'}
-                    </button>
-                    <button
-                      className="ghost-btn"
-                      onClick={downloadAllCards}
-                      disabled={!shareCards.length}
-                    >
-                      一键下载三张
+                      {isGeneratingShare ? '生成中...' : shareCards.length ? '一键下载' : '生成分享图'}
                     </button>
                     <button className="primary-btn" onClick={closeModal}>
                       回到首页
                     </button>
                   </footer>
-                  {copyStatus ? <p className="copy-status">{copyStatus}</p> : null}
                   {shareStatus ? <p className="copy-status">{shareStatus}</p> : null}
 
                   {shareCards.length ? (
                     <section className="share-panel">
                       <h4>分享图片</h4>
-                      <p>已生成 3 张图片，适合发到小红书、B 站、朋友圈。</p>
+                      <p>已生成分享图片，适合发到小红书、B 站、朋友圈。</p>
                       <div className="share-grid">
                         {shareCards.map((card) => (
                           <article key={card.id} className="share-card-preview">

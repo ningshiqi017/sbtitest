@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import SbtiHomeEn from '@/components/sbti-home-en';
 import { toAbsoluteUrl } from '@/lib/site';
 
@@ -83,7 +84,9 @@ export default function Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
       />
-      <SbtiHomeEn />
+      <Suspense fallback={null}>
+        <SbtiHomeEn />
+      </Suspense>
     </>
   );
 }
