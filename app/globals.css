@@ -1072,6 +1072,202 @@ button {
     padding: 12px 14px;
     min-height: 44px;
   }
+
+  /* 移动端答题弹窗 - 不滚动，一屏显示 */
+  .modal-overlay {
+    padding: 8px;
+  }
+
+  .modal-shell {
+    max-height: calc(100vh - 16px);
+    height: calc(100vh - 16px);
+    max-height: -webkit-fill-available;
+    height: -webkit-fill-available;
+    border-radius: 18px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .modal-header {
+    padding: 10px 12px;
+    flex-shrink: 0;
+  }
+
+  .modal-header h3 {
+    font-size: 16px;
+    margin: 2px 0 0;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+  }
+
+  .quiz-body {
+    padding: 8px 10px;
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .progress-head {
+    font-size: 11px;
+    padding: 0 4px;
+  }
+
+  .progress-track {
+    height: 8px;
+    margin-top: 6px;
+  }
+
+  .question-card {
+    margin-top: 8px;
+    padding: 10px 12px;
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .question-meta {
+    margin-bottom: 6px;
+  }
+
+  .badge {
+    padding: 4px 8px;
+    font-size: 10px;
+  }
+
+  .question-title {
+    font-size: 14px;
+    line-height: 1.5;
+    flex-shrink: 0;
+  }
+
+  .option-list {
+    margin-top: 8px;
+    gap: 6px;
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .option-btn {
+    padding: 10px 12px;
+    min-height: 44px;
+    font-size: 13px;
+  }
+
+  .option-code {
+    font-size: 14px;
+    width: 24px;
+    min-width: 24px;
+  }
+
+  .quiz-actions {
+    margin-top: 8px;
+    padding: 0 4px;
+    flex-shrink: 0;
+  }
+
+  .quiz-actions .ghost-btn {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+
+  .auto-next-note {
+    font-size: 11px;
+  }
+
+  /* 移动端结果弹窗 */
+  .result-body {
+    padding: 8px 10px;
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .result-top {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .result-poster {
+    padding: 10px;
+  }
+
+  .result-poster img {
+    aspect-ratio: 4/3;
+  }
+
+  .result-main {
+    padding: 10px 12px;
+  }
+
+  .result-main h3 {
+    font-size: 22px;
+    margin: 4px 0 6px;
+  }
+
+  .result-badge {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+
+  .result-sub,
+  .result-desc {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .dim-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .dim-card {
+    padding: 8px;
+  }
+
+  .dim-head strong {
+    font-size: 12px;
+  }
+
+  .dim-head span {
+    font-size: 11px;
+  }
+
+  .dim-card p {
+    font-size: 11px;
+    line-height: 1.5;
+    margin-top: 4px;
+  }
+
+  .result-note {
+    margin-top: 10px;
+    padding: 10px;
+  }
+
+  .result-note h4 {
+    font-size: 13px;
+  }
+
+  .result-note p {
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  .result-actions {
+    margin-top: 10px;
+    gap: 8px;
+  }
+
+  .result-actions button {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
 }
 
 /* 平板适配 (641px-1023px) */
