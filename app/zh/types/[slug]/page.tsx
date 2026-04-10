@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { typeImages, typeLibrary } from '@/lib/sbti-data-en';
+import { typeImages, typeLibrary } from '@/lib/sbti-data';
 import { toAbsoluteUrl } from '@/lib/site';
 import { allTypeSlugs, fromTypeSlug } from '@/lib/type-slugs';
 
@@ -19,7 +19,7 @@ export async function generateMetadata({
 
   if (!code) {
     return {
-      title: 'Type details',
+      title: '人格详情',
       robots: {
         index: false,
         follow: false,
@@ -28,9 +28,9 @@ export async function generateMetadata({
   }
 
   const item = typeLibrary[code as keyof typeof typeLibrary];
-  const title = `${item.code} (${item.cn}) SBTI profile: traits, relationship pattern, behavior style and social expression`;
-  const description = `Explore what ${item.code} (${item.cn}) means in SBTI. This page summarizes core traits, behavior tendencies, relationship style, and expression patterns so you can understand your result and share it with context.`;
-  const url = toAbsoluteUrl(`/types/${slug}`);
+  const title = `${item.code}（${item.cn}）SBTI人格测试结果深度解析：性格特征、关系倾向、行为模式、社交表达与成长建议｜在线查看完整版页`;
+  const description = `想知道 ${item.code}（${item.cn}）在 SBTI 人格测试里到底代表什么？本页面系统整理该类型的核心特征、行为风格、关系互动方式与情绪表达习惯，并结合中文互联网语境给出更易理解的解释，帮助你把测试结果从“好玩标签”转化成可自我观察、可社交分享、可快速介绍自己的长期表达素材，并可配合首页答题再次验证维度分布与应用。`;
+  const url = toAbsoluteUrl(`/zh/types/${slug}`);
 
   return {
     title,
@@ -47,7 +47,7 @@ export async function generateMetadata({
       title,
       description,
       url,
-      locale: 'en_US',
+      locale: 'zh_CN',
     },
     twitter: {
       title,
@@ -56,7 +56,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function TypeDetailPage({
+export default async function ZhTypeDetailPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
@@ -72,13 +72,13 @@ export default async function TypeDetailPage({
   return (
     <main className="type-page type-detail-page">
       <header className="type-page-header">
-        <p>SBTI Type Detail</p>
+        <p>SBTI 人格详情</p>
         <h1>
-          {item.code} ({item.cn})
+          {item.code}（{item.cn}）
         </h1>
         <div className="type-detail-nav">
-          <Link href="/">Back to homepage test</Link>
-          <Link href="/types">Browse all types</Link>
+          <Link href="/zh">返回首页测试</Link>
+          <Link href="/zh/types">查看全部类型</Link>
         </div>
       </header>
 

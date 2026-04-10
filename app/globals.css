@@ -169,11 +169,11 @@ button {
 .hero-screen {
   min-height: 100vh;
   display: grid;
-  place-content: center;
+  place-content: start;
   justify-items: center;
   gap: clamp(20px, 3.6vw, 36px);
   padding: clamp(20px, 3.5vw, 42px);
-  padding-top: clamp(28px, 5vw, 52px);
+  padding-top: clamp(60px, 12vh, 120px);
 }
 
 .hero-title {
@@ -895,7 +895,7 @@ button {
 
   .hero-screen {
     padding: 16px;
-    padding-top: 22px;
+    padding-top: 80px;
   }
 
   .hero-title {

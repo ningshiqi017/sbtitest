@@ -3,6 +3,7 @@ import Script from 'next/script';
 import { Noto_Sans_SC, Noto_Serif_SC } from 'next/font/google';
 import GlobalFooter from '@/components/global-footer';
 import GlobalTopNav from '@/components/global-top-nav';
+import LanguageSwitchPrompt from '@/components/language-switch-prompt';
 import { SITE_URL } from '@/lib/site';
 import './globals.css';
 
@@ -28,29 +29,29 @@ export const metadata: Metadata = {
     apple: '/logo.png',
   },
   title:
-    'SBTI人格测试在线平台完整说明：首页即测、类型浏览、结果解读、社交分享、FAQ与类型索引导航系统总入口中心页',
+    'SBTI Personality Test Online: instant quiz, type library, interpretation and shareable results',
   description:
-    '这是一个面向中文互联网用户的SBTI人格测试站点，支持首页即时开测、弹窗逐题作答与结果页内展示，完成后可查看人格名称、维度评分和可分享内容。站点同时提供类型索引、人格详情、FAQ与合规页面，方便你理解SBTI是什么、它与MBTI的区别，以及在娱乐和社交场景中的使用边界。内容强调轻松表达而非心理诊断，适合自测与朋友讨论。',
+    'SBTI is an entertainment-first personality test inspired by internet culture. Start from the homepage, answer in a modal flow, and get a shareable result with dimension scores and type interpretation.',
   openGraph: {
     title:
-      'SBTI人格测试在线平台完整说明：首页即测、类型浏览、结果解读、社交分享、FAQ与类型索引导航系统总入口中心页',
+      'SBTI Personality Test Online: instant quiz, type library, interpretation and shareable results',
     description:
-      '这是一个面向中文互联网用户的SBTI人格测试站点，支持首页即时开测、弹窗逐题作答与结果页内展示，完成后可查看人格名称、维度评分和可分享内容。站点同时提供类型索引、人格详情、FAQ与合规页面，方便你理解SBTI是什么、它与MBTI的区别，以及在娱乐和社交场景中的使用边界。内容强调轻松表达而非心理诊断，适合自测与朋友讨论。',
+      'SBTI is an entertainment-first personality test inspired by internet culture. Start from the homepage, answer in a modal flow, and get a shareable result with dimension scores and type interpretation.',
     type: 'website',
-    locale: 'zh_CN',
+    locale: 'en_US',
   },
   twitter: {
     card: 'summary_large_image',
     title:
-      'SBTI人格测试在线平台完整说明：首页即测、类型浏览、结果解读、社交分享、FAQ与类型索引导航系统总入口中心页',
+      'SBTI Personality Test Online: instant quiz, type library, interpretation and shareable results',
     description:
-      '这是一个面向中文互联网用户的SBTI人格测试站点，支持首页即时开测、弹窗逐题作答与结果页内展示，完成后可查看人格名称、维度评分和可分享内容。站点同时提供类型索引、人格详情、FAQ与合规页面，方便你理解SBTI是什么、它与MBTI的区别，以及在娱乐和社交场景中的使用边界。内容强调轻松表达而非心理诊断，适合自测与朋友讨论。',
+      'SBTI is an entertainment-first personality test inspired by internet culture. Start from the homepage, answer in a modal flow, and get a shareable result with dimension scores and type interpretation.',
   },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="zh-CN">
+    <html lang="en">
       <body className={`${bodyFont.variable} ${displayFont.variable}`}>
         {/* Google Analytics */}
         <Script
@@ -66,6 +67,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           `}
         </Script>
         <GlobalTopNav />
+        <LanguageSwitchPrompt />
         <div className="app-main">{children}</div>
         <GlobalFooter />
       </body>
