@@ -558,12 +558,17 @@ export default function SbtiHomeEn() {
                     <p>{result.special ? copywriting.specialFunNote : copywriting.defaultFunNote}</p>
                   </section>
 
-                  <footer className="result-actions">
-                    <button className="ghost-btn" onClick={openTest}>
-                      {isSharedResult ? 'Take same test' : 'Retake'}
-                    </button>
+                  <footer className="result-actions result-actions-en">
+                    <a
+                      className="social-share-btn action-coffee"
+                      href="https://buymeacoffee.com/ningshiqi"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <span>Buy Me a Coffee</span>
+                    </a>
                     <button
-                      className="ghost-btn social-share-btn share-x-btn"
+                      className="ghost-btn social-share-btn share-x-btn action-share-x"
                       onClick={handleShareToX}
                       disabled={isSharingX}
                     >
@@ -571,7 +576,7 @@ export default function SbtiHomeEn() {
                       <span>{isSharingX ? 'Opening X...' : 'Share on X'}</span>
                     </button>
                     <button
-                      className="ghost-btn social-share-btn share-ig-btn"
+                      className="ghost-btn social-share-btn share-ig-btn action-share-ig"
                       onClick={handleShareToInstagram}
                       disabled={isSharingInstagram}
                     >
@@ -579,7 +584,7 @@ export default function SbtiHomeEn() {
                       <span>{isSharingInstagram ? 'Preparing...' : 'Share on Instagram'}</span>
                     </button>
                     <button
-                      className="ghost-btn"
+                      className="ghost-btn action-generate"
                       onClick={handleShareAction}
                       disabled={isGeneratingShare}
                     >
@@ -589,7 +594,10 @@ export default function SbtiHomeEn() {
                           ? 'One-click download'
                           : 'Generate share cards'}
                     </button>
-                    <button className="primary-btn" onClick={closeModal}>
+                    <button className="ghost-btn action-retake" onClick={openTest}>
+                      {isSharedResult ? 'Take same test' : 'Retake'}
+                    </button>
+                    <button className="ghost-btn action-back" onClick={closeModal}>
                       Back to homepage
                     </button>
                   </footer>

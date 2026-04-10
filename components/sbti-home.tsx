@@ -507,6 +507,15 @@ export default function SbtiHome() {
                     <p>{result.special ? copywriting.specialFunNote : copywriting.defaultFunNote}</p>
                   </section>
 
+                  <section className="donate-panel" aria-label="打赏支持">
+                    <div className="donate-copy">
+                      <h4>请作者喝杯奶茶</h4>
+                      <p>如果你觉得这个测试有意思、够准确，欢迎随手打赏支持持续更新。</p>
+                      <p className="donate-tip">微信扫码打赏，手机可长按识别二维码。</p>
+                    </div>
+                    <img src="/skm.jpg" alt="微信打赏收款码" loading="lazy" />
+                  </section>
+
                   <footer className="result-actions">
                     <button className="ghost-btn" onClick={openTest}>
                       {isSharedResult ? '测同款' : '重新测试'}
