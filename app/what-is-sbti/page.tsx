@@ -83,6 +83,7 @@ export default function WhatIsSbtiPage() {
           SBTI test means Silly Big Personality Test, a fast and playful format for internet-native
           self-description. It is designed for entertainment and sharing, not for diagnosis.
         </p>
+        <p className="type-meta">Last updated: April 10, 2026 · Version: 2026.04</p>
         <div className="type-detail-nav">
           <Link href="/">Back to homepage test</Link>
           <Link href="/sbti-vs-mbti">Read SBTI vs MBTI</Link>

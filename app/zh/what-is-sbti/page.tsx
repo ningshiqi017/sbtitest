@@ -74,6 +74,7 @@ export default function ZhWhatIsSbtiPage() {
         <p className="type-desc">
           SBTI 测试是一个轻松、可分享、偏互联网语境的人格测试产品，目标是娱乐表达，不是专业诊断。
         </p>
+        <p className="type-meta">更新时间：2026-04-10 · 版本：2026.04</p>
         <div className="type-detail-nav">
           <Link href="/zh">返回首页测试</Link>
           <Link href="/zh/sbti-vs-mbti">查看 SBTI 和 MBTI 区别</Link>

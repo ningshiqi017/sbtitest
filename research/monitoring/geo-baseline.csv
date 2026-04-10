@@ -1,0 +1,16 @@
+record_date_记录日期,locale_语言,query_查询词,intent_意图,primary_target_path_主目标路径,chatgpt_cited_ChatGPT是否引用,perplexity_cited_Perplexity是否引用,google_ai_overview_cited_GoogleAI概览是否引用,cited_urls_引用链接,notes_备注,next_check_date_下次检查日期
+2026-04-10,en,sbti test,navigational+transactional_导航+转化,/,待检查,待检查,待检查,,Build后首轮基线,2026-04-17
+2026-04-10,en,sbti online test,transactional_转化,/,待检查,待检查,待检查,,Build后首轮基线,2026-04-17
+2026-04-10,en,what is sbti,informational_信息,/what-is-sbti,待检查,待检查,待检查,,定义页上线后基线,2026-04-17
+2026-04-10,en,sbti vs mbti,informational_信息,/sbti-vs-mbti,待检查,待检查,待检查,,对比页上线后基线,2026-04-17
+2026-04-10,en,how sbti test works,informational_信息,/how-sbti-test-works,待检查,待检查,待检查,,流程页上线后基线,2026-04-17
+2026-04-10,en,sbti types,informational_信息,/types,待检查,待检查,待检查,,类型索引页schema基线,2026-04-17
+2026-04-10,en,sbti atm-er,informational_信息,/types/atm-er,待检查,待检查,待检查,,类型长尾词基线,2026-04-17
+2026-04-10,en,sbti dead type,informational_信息,/types/dead,待检查,待检查,待检查,,类型长尾词基线,2026-04-17
+2026-04-10,zh,sbti测试,navigational+transactional_导航+转化,/zh,待检查,待检查,待检查,,中文核心词基线,2026-04-17
+2026-04-10,zh,sbti人格测试,navigational+transactional_导航+转化,/zh,待检查,待检查,待检查,,中文核心词基线,2026-04-17
+2026-04-10,zh,sbti是什么,informational_信息,/zh/what-is-sbti,待检查,待检查,待检查,,中文定义页基线,2026-04-17
+2026-04-10,zh,sbti和mbti区别,informational_信息,/zh/sbti-vs-mbti,待检查,待检查,待检查,,中文对比页基线,2026-04-17
+2026-04-10,zh,sbti怎么测,informational_信息,/zh/how-sbti-test-works,待检查,待检查,待检查,,中文流程页基线,2026-04-17
+2026-04-10,zh,sbti人格类型,informational_信息,/zh/types,待检查,待检查,待检查,,中文类型索引基线,2026-04-17
+2026-04-10,zh,sbti 27种人格,informational_信息,/zh/types,待检查,待检查,待检查,,中文类型规模词基线,2026-04-17

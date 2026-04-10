@@ -73,6 +73,7 @@ export default function ZhSbtiVsMbtiPage() {
         <p className="type-desc">
           两者都能帮助你表达自我，但路径不同：MBTI 更偏理论框架，SBTI 更偏互联网语境下的快速共鸣与分享。
         </p>
+        <p className="type-meta">更新时间：2026-04-10 · 版本：2026.04</p>
         <div className="type-detail-nav">
           <Link href="/zh">返回首页测试</Link>
           <Link href="/zh/what-is-sbti">什么是 SBTI</Link>

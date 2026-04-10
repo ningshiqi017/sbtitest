@@ -1,8 +1,12 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { typeLibrary } from '@/lib/sbti-data';
+import { createBreadcrumbSchema, createItemListSchema, createWebPageSchema } from '@/lib/seo-schema';
 import { toAbsoluteUrl } from '@/lib/site';
 import { toTypeSlug } from '@/lib/type-slugs';
+
+const LAST_UPDATED_ISO = '2026-04-10';
+const LAST_UPDATED_LABEL = '2026-04-10';
 
 export const metadata: Metadata = {
   title:
@@ -29,12 +33,52 @@ export const metadata: Metadata = {
 
 export default function ZhTypeIndexPage() {
   const list = Object.values(typeLibrary);
+  const pageUrl = toAbsoluteUrl('/zh/types');
+  const itemEntries = list.map((item) => ({
+    name: `${item.code}（${item.cn}）`,
+    url: toAbsoluteUrl(`/zh/types/${toTypeSlug(item.code)}`),
+    description: item.intro,
+  }));
+
+  const webPageSchema = createWebPageSchema({
+    name: 'SBTI 人格类型索引',
+    description: 'SBTI 全部人格类型的索引与导航页。',
+    url: pageUrl,
+    inLanguage: 'zh-CN',
+    dateModified: LAST_UPDATED_ISO,
+  });
+
+  const breadcrumbSchema = createBreadcrumbSchema([
+    { name: '首页', url: toAbsoluteUrl('/zh') },
+    { name: '人格类型', url: pageUrl },
+  ]);
+
+  const itemListSchema = createItemListSchema({
+    name: 'SBTI 人格类型列表',
+    url: pageUrl,
+    inLanguage: 'zh-CN',
+    items: itemEntries,
+  });
 
   return (
     <main className="type-page">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
+      />
+
       <header className="type-page-header">
         <p>SBTI 人格索引</p>
         <h1>全部人格类型</h1>
+        <p className="type-meta">更新时间：{LAST_UPDATED_LABEL} · 版本：2026.04</p>
         <Link href="/zh">返回首页测试</Link>
       </header>
 

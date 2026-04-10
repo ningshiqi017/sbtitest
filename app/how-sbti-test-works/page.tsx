@@ -82,6 +82,7 @@ export default function HowSbtiWorksPage() {
           The SBTI online flow is designed for fast completion: answer one question at a time, get
           instant scoring, and receive a share-ready result without leaving the homepage context.
         </p>
+        <p className="type-meta">Last updated: April 10, 2026 · Version: 2026.04</p>
         <div className="type-detail-nav">
           <Link href="/">Back to homepage test</Link>
           <Link href="/what-is-sbti">What is SBTI</Link>

@@ -891,6 +891,10 @@ button {
   .type-page-header h1 {
     font-size: clamp(26px, 7vw, 34px);
   }
+
+  .type-detail-page .type-page-header h1 {
+    font-size: clamp(20px, 6vw, 24px);
+  }
 }
 
 .type-detail-card {
@@ -904,18 +908,19 @@ button {
 
 .type-detail-layout {
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 24px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
   align-items: start;
 }
 
 .type-detail-image {
-  width: 280px;
-  flex-shrink: 0;
+  width: 100%;
 }
 
 .type-detail-image img {
   width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
   border-radius: 14px;
   border: 1px solid color-mix(in oklch, var(--line) 66%, var(--brand));
 }
@@ -939,6 +944,58 @@ button {
   line-height: 1.9;
 }
 
+.type-meta {
+  margin: 10px 0 0;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.type-related-links {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.type-related-links a {
+  text-decoration: none;
+  color: var(--brand-strong);
+  border: 1px solid color-mix(in oklch, var(--line) 74%, var(--brand));
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 12px;
+  line-height: 1;
+  background: color-mix(in oklch, var(--paper) 88%, var(--brand-soft));
+}
+
+.type-related-links a:hover {
+  border-color: color-mix(in oklch, var(--brand) 32%, var(--line));
+}
+
+.type-detail-page .type-page-header h1 {
+  font-size: clamp(24px, 2.8vw, 30px);
+  line-height: 1.18;
+}
+
+.type-detail-page .type-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.type-detail-header-main {
+  min-width: 0;
+}
+
+.type-detail-page .type-detail-nav {
+  margin-left: auto;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  align-self: center;
+}
+
 @media (max-width: 960px) {
   .site-nav {
     width: calc(100% - 18px);
@@ -958,20 +1015,25 @@ button {
   }
 
   .type-detail-layout {
-    grid-template-columns: auto 1fr;
-    gap: 20px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .type-detail-page .type-page-header {
+    display: block;
   }
 
-  .type-detail-image {
-    width: 220px;
+  .type-detail-page .type-detail-nav {
+    margin-left: 0;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    white-space: normal;
   }
 
-  .type-detail-image img {
-    width: 100%;
-    max-width: none;
-    aspect-ratio: 1;
-    object-fit: cover;
-    margin: 0;
+  .type-related-links a {
+    font-size: 12px;
   }
 }
 

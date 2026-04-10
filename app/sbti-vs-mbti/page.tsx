@@ -82,6 +82,7 @@ export default function SbtiVsMbtiPage() {
           Both are personality frameworks, but they serve different moments. MBTI is model-first;
           SBTI test is culture-first and built for fast online sharing.
         </p>
+        <p className="type-meta">Last updated: April 10, 2026 · Version: 2026.04</p>
         <div className="type-detail-nav">
           <Link href="/">Back to homepage test</Link>
           <Link href="/what-is-sbti">What is SBTI</Link>

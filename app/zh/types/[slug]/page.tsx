@@ -2,8 +2,12 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { typeImages, typeLibrary } from '@/lib/sbti-data';
+import { createBreadcrumbSchema, createWebPageSchema } from '@/lib/seo-schema';
 import { toAbsoluteUrl } from '@/lib/site';
 import { allTypeSlugs, fromTypeSlug } from '@/lib/type-slugs';
+
+const LAST_UPDATED_ISO = '2026-04-10';
+const LAST_UPDATED_LABEL = '2026-04-10';
 
 export function generateStaticParams() {
   return allTypeSlugs().map((slug) => ({ slug }));
@@ -68,24 +72,60 @@ export default async function ZhTypeDetailPage({
 
   const item = typeLibrary[code as keyof typeof typeLibrary];
   const imageSrc = typeImages[code as keyof typeof typeImages];
+  const pageUrl = toAbsoluteUrl(`/zh/types/${slug}`);
+
+  const webPageSchema = createWebPageSchema({
+    name: `${item.code} 人格详情`,
+    description: `${item.code} SBTI 人格测试结果详情页，包含行为风格与社交表达说明。`,
+    url: pageUrl,
+    inLanguage: 'zh-CN',
+    dateModified: LAST_UPDATED_ISO,
+  });
+
+  const breadcrumbSchema = createBreadcrumbSchema([
+    { name: '首页', url: toAbsoluteUrl('/zh') },
+    { name: '人格类型', url: toAbsoluteUrl('/zh/types') },
+    { name: item.code, url: pageUrl },
+  ]);
 
   return (
     <main className="type-page type-detail-page">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+
       <header className="type-page-header">
-        <p>SBTI 人格详情</p>
-        <h1>
-          {item.code}（{item.cn}）
-        </h1>
+        <div className="type-detail-header-main">
+          <p>SBTI 人格详情</p>
+          <h1>
+            {item.code}（{item.cn}）
+          </h1>
+          <p className="type-meta">更新时间：{LAST_UPDATED_LABEL} · 版本：2026.04</p>
+        </div>
         <div className="type-detail-nav">
           <Link href="/zh">返回首页测试</Link>
           <Link href="/zh/types">查看全部类型</Link>
         </div>
       </header>
 
-      <article className="type-detail-card">
-        <img src={imageSrc} alt={`${item.code} ${item.cn}`} />
-        <p className="type-intro">{item.intro}</p>
-        <p className="type-desc">{item.desc}</p>
+      <article className="type-detail-card type-detail-layout">
+        <div className="type-detail-image">
+          <img src={imageSrc} alt={`${item.code} ${item.cn}`} />
+        </div>
+        <div className="type-detail-content">
+          <p className="type-intro">{item.intro}</p>
+          <p className="type-desc">{item.desc}</p>
+          <div className="type-related-links">
+            <Link href="/zh/what-is-sbti">什么是 SBTI</Link>
+            <Link href="/zh/sbti-vs-mbti">SBTI 和 MBTI 区别</Link>
+            <Link href="/zh/how-sbti-test-works">SBTI 测试怎么测</Link>
+          </div>
+        </div>
       </article>
     </main>
   );
