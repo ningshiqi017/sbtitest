@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { typeImages, typeLibrary } from '@/lib/sbti-data-en';
 import { buildShareResultToken, parseShareResultToken } from '@/lib/share-link';
 import {
@@ -25,6 +25,7 @@ import {
   type ComputedResult,
 } from '@/lib/sbti-engine-en';
 import { toTypeSlug } from '@/lib/type-slugs';
+import AdsterraIframeUnit from '@/components/adsterra-iframe-unit';
 
 type ModalStage = 'quiz' | 'result';
 
@@ -67,6 +68,7 @@ function InstagramIcon() {
 
 export default function SbtiHomeEn() {
   const searchParams = useSearchParams();
+  const contentWrapRef = useRef<HTMLElement | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [stage, setStage] = useState<ModalStage>('quiz');
   const [sequence, setSequence] = useState<AnyQuestion[]>([]);
@@ -80,11 +82,16 @@ export default function SbtiHomeEn() {
   const [isSharingInstagram, setIsSharingInstagram] = useState(false);
   const [shareTokenHandled, setShareTokenHandled] = useState<string | null>(null);
   const [isSharedResult, setIsSharedResult] = useState(false);
+  const [adSlotCount, setAdSlotCount] = useState(1);
 
   const visibleQuestions = useMemo(() => getVisibleQuestions(sequence, answers), [sequence, answers]);
   const answeredCount = useMemo(
     () => getAnsweredCount(visibleQuestions, answers),
     [visibleQuestions, answers],
+  );
+  const adRailSlots = useMemo(
+    () => Array.from({ length: adSlotCount }, (_, index) => index),
+    [adSlotCount],
   );
 
   const currentQuestion = visibleQuestions[currentIndex];
@@ -113,6 +120,30 @@ export default function SbtiHomeEn() {
     const timer = window.setTimeout(() => setShareStatus(''), 1800);
     return () => window.clearTimeout(timer);
   }, [shareStatus]);
+
+  useEffect(() => {
+    const contentEl = contentWrapRef.current;
+    if (!contentEl) return;
+
+    const adUnitHeight = 600;
+
+    const updateSlotCount = () => {
+      const height = contentEl.getBoundingClientRect().height;
+      const nextCount = Math.max(1, Math.floor(height / adUnitHeight));
+      setAdSlotCount((prev) => (prev === nextCount ? prev : nextCount));
+    };
+
+    updateSlotCount();
+
+    const observer = new ResizeObserver(updateSlotCount);
+    observer.observe(contentEl);
+    window.addEventListener('resize', updateSlotCount);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', updateSlotCount);
+    };
+  }, []);
 
   useEffect(() => {
     const token = searchParams.get('r');
@@ -322,7 +353,16 @@ export default function SbtiHomeEn() {
         </button>
       </section>
 
-      <section className="content-wrap" id="about">
+      <section className="home-after-hero" aria-label="Homepage content and ad rails">
+        <aside className="home-ads-rail home-ads-left" aria-label="Left ad rail">
+          {adRailSlots.map((slot) => (
+            <div key={`en-left-${slot}`} className="home-ad-unit">
+              <AdsterraIframeUnit />
+            </div>
+          ))}
+        </aside>
+
+        <section ref={contentWrapRef} className="content-wrap" id="about">
         <article className="content-card" id="what-is-sbti">
           <h2>What is SBTI?</h2>
           <p>
@@ -423,6 +463,15 @@ export default function SbtiHomeEn() {
             <p>No. The full SBTI test and result stay in a top-level modal on the homepage.</p>
           </details>
         </article>
+        </section>
+
+        <aside className="home-ads-rail home-ads-right" aria-label="Right ad rail">
+          {adRailSlots.map((slot) => (
+            <div key={`en-right-${slot}`} className="home-ad-unit">
+              <AdsterraIframeUnit />
+            </div>
+          ))}
+        </aside>
       </section>
 
       <AnimatePresence>

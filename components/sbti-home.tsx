@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { typeImages, typeLibrary } from '@/lib/sbti-data';
 import { buildShareResultToken, parseShareResultToken } from '@/lib/share-link';
 import {
@@ -25,6 +25,7 @@ import {
   type ComputedResult,
 } from '@/lib/sbti-engine';
 import { toTypeSlug } from '@/lib/type-slugs';
+import AdsterraIframeUnit from '@/components/adsterra-iframe-unit';
 
 type ModalStage = 'quiz' | 'result';
 
@@ -45,6 +46,7 @@ function getQuestionBadge(question: AnyQuestion): string {
 
 export default function SbtiHome() {
   const searchParams = useSearchParams();
+  const contentWrapRef = useRef<HTMLElement | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [stage, setStage] = useState<ModalStage>('quiz');
   const [sequence, setSequence] = useState<AnyQuestion[]>([]);
@@ -57,11 +59,16 @@ export default function SbtiHome() {
   const [isSharingLink, setIsSharingLink] = useState(false);
   const [shareTokenHandled, setShareTokenHandled] = useState<string | null>(null);
   const [isSharedResult, setIsSharedResult] = useState(false);
+  const [adSlotCount, setAdSlotCount] = useState(1);
 
   const visibleQuestions = useMemo(() => getVisibleQuestions(sequence, answers), [sequence, answers]);
   const answeredCount = useMemo(
     () => getAnsweredCount(visibleQuestions, answers),
     [visibleQuestions, answers],
+  );
+  const adRailSlots = useMemo(
+    () => Array.from({ length: adSlotCount }, (_, index) => index),
+    [adSlotCount],
   );
 
   const currentQuestion = visibleQuestions[currentIndex];
@@ -90,6 +97,30 @@ export default function SbtiHome() {
     const timer = window.setTimeout(() => setShareStatus(''), 1800);
     return () => window.clearTimeout(timer);
   }, [shareStatus]);
+
+  useEffect(() => {
+    const contentEl = contentWrapRef.current;
+    if (!contentEl) return;
+
+    const adUnitHeight = 600;
+
+    const updateSlotCount = () => {
+      const height = contentEl.getBoundingClientRect().height;
+      const nextCount = Math.max(1, Math.floor(height / adUnitHeight));
+      setAdSlotCount((prev) => (prev === nextCount ? prev : nextCount));
+    };
+
+    updateSlotCount();
+
+    const observer = new ResizeObserver(updateSlotCount);
+    observer.observe(contentEl);
+    window.addEventListener('resize', updateSlotCount);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', updateSlotCount);
+    };
+  }, []);
 
   useEffect(() => {
     const token = searchParams.get('r');
@@ -277,34 +308,43 @@ export default function SbtiHome() {
         </button>
       </section>
 
-      <section className="content-wrap" id="about">
-        <article className="content-card" id="what-is-sbti">
-          <h2>SBTI 是什么</h2>
-          <p>
-            SBTI 全称 Silly Big Personality Test，是一个轻松向的人格测试。它借用了 MBTI
-            的结构灵感，但结果并不是严肃心理学标签，而是更贴近中文互联网语境的“自嘲式人格”，比如“死者”“吗喽”“ATM-er”。
-            你可以把它当成一面带幽默滤镜的镜子：快速测、快速懂、快速分享。它的核心价值是娱乐和社交传播，而不是学术诊断。
-          </p>
-          <div className="type-more-wrap">
-            <Link href="/zh/what-is-sbti" className="type-more-link">
-              查看完整说明
-            </Link>
-          </div>
-        </article>
+      <section className="home-after-hero" aria-label="首页正文与广告区">
+        <aside className="home-ads-rail home-ads-left" aria-label="左侧广告位">
+          {adRailSlots.map((slot) => (
+            <div key={`zh-left-${slot}`} className="home-ad-unit">
+              <AdsterraIframeUnit />
+            </div>
+          ))}
+        </aside>
 
-        <article className="content-card" id="vs-mbti">
-          <h2>SBTI 和 MBTI 有什么区别</h2>
-          <p>
-            MBTI 是经典的人格模型，有明确理论来源，常用于自我认知和沟通风格讨论。SBTI 的目标完全不同：
-            它不追求科学严谨，更像一种当代青年语境里的表达游戏。SBTI 用荒诞和梗文化描述处境，把“解释自己”这件事变得更轻松。
-            两者都能带来“被看见”的感觉，但 MBTI 偏分析框架，SBTI 偏幽默共鸣与社交话题。
-          </p>
-          <div className="type-more-wrap">
-            <Link href="/zh/sbti-vs-mbti" className="type-more-link">
-              查看对比详情
-            </Link>
-          </div>
-        </article>
+        <section ref={contentWrapRef} className="content-wrap" id="about">
+          <article className="content-card" id="what-is-sbti">
+            <h2>SBTI 是什么</h2>
+            <p>
+              SBTI 全称 Silly Big Personality Test，是一个轻松向的人格测试。它借用了 MBTI
+              的结构灵感，但结果并不是严肃心理学标签，而是更贴近中文互联网语境的“自嘲式人格”，比如“死者”“吗喽”“ATM-er”。
+              你可以把它当成一面带幽默滤镜的镜子：快速测、快速懂、快速分享。它的核心价值是娱乐和社交传播，而不是学术诊断。
+            </p>
+            <div className="type-more-wrap">
+              <Link href="/zh/what-is-sbti" className="type-more-link">
+                查看完整说明
+              </Link>
+            </div>
+          </article>
+
+          <article className="content-card" id="vs-mbti">
+            <h2>SBTI 和 MBTI 有什么区别</h2>
+            <p>
+              MBTI 是经典的人格模型，有明确理论来源，常用于自我认知和沟通风格讨论。SBTI 的目标完全不同：
+              它不追求科学严谨，更像一种当代青年语境里的表达游戏。SBTI 用荒诞和梗文化描述处境，把“解释自己”这件事变得更轻松。
+              两者都能带来“被看见”的感觉，但 MBTI 偏分析框架，SBTI 偏幽默共鸣与社交话题。
+            </p>
+            <div className="type-more-wrap">
+              <Link href="/zh/sbti-vs-mbti" className="type-more-link">
+                查看对比详情
+              </Link>
+            </div>
+          </article>
 
         <article className="content-card" id="how-to-play">
           <h2>测试包含哪些内容 / 怎么测</h2>
@@ -353,25 +393,34 @@ export default function SbtiHome() {
           </p>
         </article>
 
-        <article className="content-card faq-card" id="faq">
-          <h2>FAQ</h2>
-          <details>
-            <summary>SBTI 和 MBTI 的区别是什么？</summary>
-            <p>MBTI 偏心理模型，SBTI 偏娱乐表达。前者强调结构化认知，后者强调社交语境下的幽默共鸣。</p>
-          </details>
-          <details>
-            <summary>SBTI 有多少种人格？</summary>
-            <p>当前版本共 27 种人格类型，后续会继续完善描述和类型详情页。</p>
-          </details>
-          <details>
-            <summary>SBTI 测试免费吗？</summary>
-            <p>目前在线版本免费使用，打开首页即可测试，不需要注册。</p>
-          </details>
-          <details>
-            <summary>SBTI 测试会跳转新页面吗？</summary>
-            <p>不会。点击开始后在顶层弹窗完成测试和结果查看，用户始终停留在首页。</p>
-          </details>
-        </article>
+          <article className="content-card faq-card" id="faq">
+            <h2>FAQ</h2>
+            <details>
+              <summary>SBTI 和 MBTI 的区别是什么？</summary>
+              <p>MBTI 偏心理模型，SBTI 偏娱乐表达。前者强调结构化认知，后者强调社交语境下的幽默共鸣。</p>
+            </details>
+            <details>
+              <summary>SBTI 有多少种人格？</summary>
+              <p>当前版本共 27 种人格类型，后续会继续完善描述和类型详情页。</p>
+            </details>
+            <details>
+              <summary>SBTI 测试免费吗？</summary>
+              <p>目前在线版本免费使用，打开首页即可测试，不需要注册。</p>
+            </details>
+            <details>
+              <summary>SBTI 测试会跳转新页面吗？</summary>
+              <p>不会。点击开始后在顶层弹窗完成测试和结果查看，用户始终停留在首页。</p>
+            </details>
+          </article>
+        </section>
+
+        <aside className="home-ads-rail home-ads-right" aria-label="右侧广告位">
+          {adRailSlots.map((slot) => (
+            <div key={`zh-right-${slot}`} className="home-ad-unit">
+              <AdsterraIframeUnit />
+            </div>
+          ))}
+        </aside>
       </section>
 
       <AnimatePresence>

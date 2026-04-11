@@ -255,6 +255,54 @@ button {
   gap: 14px;
 }
 
+.home-after-hero {
+  width: min(1520px, calc(100% - 24px));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 160px minmax(0, 980px) 160px;
+  align-items: start;
+  gap: 18px;
+}
+
+.home-after-hero > .content-wrap {
+  max-width: none;
+  margin: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.home-ads-rail {
+  display: grid;
+  align-content: start;
+  gap: 0;
+}
+
+.home-ad-unit {
+  width: 160px;
+  min-height: 600px;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+
+.adsterra-frame {
+  display: block;
+  width: 160px;
+  height: 600px;
+  border: 0;
+  border-radius: var(--radius-md);
+}
+
+@media (max-width: 1200px) {
+  .home-after-hero {
+    width: min(980px, calc(100% - 24px));
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .home-ads-rail {
+    display: none;
+  }
+}
+
 .content-card {
   border-radius: var(--radius-xl);
   border: 1px solid var(--line);
