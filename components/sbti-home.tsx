@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { typeImages, typeLibrary } from '@/lib/sbti-data';
 import { buildShareResultToken, parseShareResultToken } from '@/lib/share-link';
 import {
@@ -31,6 +31,7 @@ type ModalStage = 'quiz' | 'result';
 
 const optionCodes = ['A', 'B', 'C', 'D', 'E'];
 const featuredTypeCodes = ['CTRL', 'ATM-er', 'MALO', 'MONK', 'DEAD', 'SEXY'] as const;
+const adRailSlots = Array.from({ length: 3 }, (_, index) => index);
 const featuredTypeEntries = featuredTypeCodes
   .map((code) => typeLibrary[code])
   .filter(Boolean);
@@ -46,7 +47,6 @@ function getQuestionBadge(question: AnyQuestion): string {
 
 export default function SbtiHome() {
   const searchParams = useSearchParams();
-  const contentWrapRef = useRef<HTMLElement | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [stage, setStage] = useState<ModalStage>('quiz');
   const [sequence, setSequence] = useState<AnyQuestion[]>([]);
@@ -59,16 +59,11 @@ export default function SbtiHome() {
   const [isSharingLink, setIsSharingLink] = useState(false);
   const [shareTokenHandled, setShareTokenHandled] = useState<string | null>(null);
   const [isSharedResult, setIsSharedResult] = useState(false);
-  const [adSlotCount, setAdSlotCount] = useState(1);
 
   const visibleQuestions = useMemo(() => getVisibleQuestions(sequence, answers), [sequence, answers]);
   const answeredCount = useMemo(
     () => getAnsweredCount(visibleQuestions, answers),
     [visibleQuestions, answers],
-  );
-  const adRailSlots = useMemo(
-    () => Array.from({ length: adSlotCount }, (_, index) => index),
-    [adSlotCount],
   );
 
   const currentQuestion = visibleQuestions[currentIndex];
@@ -97,30 +92,6 @@ export default function SbtiHome() {
     const timer = window.setTimeout(() => setShareStatus(''), 1800);
     return () => window.clearTimeout(timer);
   }, [shareStatus]);
-
-  useEffect(() => {
-    const contentEl = contentWrapRef.current;
-    if (!contentEl) return;
-
-    const adUnitHeight = 600;
-
-    const updateSlotCount = () => {
-      const height = contentEl.getBoundingClientRect().height;
-      const nextCount = Math.max(1, Math.floor(height / adUnitHeight));
-      setAdSlotCount((prev) => (prev === nextCount ? prev : nextCount));
-    };
-
-    updateSlotCount();
-
-    const observer = new ResizeObserver(updateSlotCount);
-    observer.observe(contentEl);
-    window.addEventListener('resize', updateSlotCount);
-
-    return () => {
-      observer.disconnect();
-      window.removeEventListener('resize', updateSlotCount);
-    };
-  }, []);
 
   useEffect(() => {
     const token = searchParams.get('r');
@@ -317,7 +288,7 @@ export default function SbtiHome() {
           ))}
         </aside>
 
-        <section ref={contentWrapRef} className="content-wrap" id="about">
+        <section className="content-wrap" id="about">
           <article className="content-card" id="what-is-sbti">
             <h2>SBTI 是什么</h2>
             <p>

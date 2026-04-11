@@ -167,14 +167,14 @@ button {
 }
 
 .hero-screen {
-  min-height: 100vh;
+  min-height: clamp(420px, 72vh, 760px);
   display: grid;
   align-content: start;
   justify-content: center;
   justify-items: center;
   gap: clamp(20px, 3.6vw, 36px);
   padding: clamp(20px, 3.5vw, 42px);
-  padding-top: clamp(60px, 12vh, 120px);
+  padding-top: clamp(56px, 9vh, 92px);
 }
 
 .hero-title {
@@ -258,23 +258,33 @@ button {
 .home-after-hero {
   width: min(1520px, calc(100% - 24px));
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 160px minmax(0, 980px) 160px;
-  align-items: start;
-  gap: 18px;
+  position: relative;
+  padding: 0 178px;
 }
 
 .home-after-hero > .content-wrap {
-  max-width: none;
-  margin: 0;
-  padding-left: 0;
-  padding-right: 0;
+  max-width: 980px;
+  margin: 0 auto;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
 .home-ads-rail {
-  display: grid;
-  align-content: start;
+  position: absolute;
+  top: 0;
+  width: 160px;
+  display: flex;
+  flex-direction: column;
   gap: 0;
+  z-index: 1;
+}
+
+.home-ads-left {
+  left: 0;
+}
+
+.home-ads-right {
+  right: 0;
 }
 
 .home-ad-unit {
@@ -295,7 +305,7 @@ button {
 @media (max-width: 1200px) {
   .home-after-hero {
     width: min(980px, calc(100% - 24px));
-    grid-template-columns: minmax(0, 1fr);
+    padding: 0;
   }
 
   .home-ads-rail {
